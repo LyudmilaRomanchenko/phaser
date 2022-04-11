@@ -259,10 +259,66 @@ function showOptions(option, leftIndex, rightIndef) {
 
     const left = option[leftIndex];
     left.visible = true;
+    left.setScale = { x: 0.5, y: 0.5 }
     console.log("left", left)
     
     const right = option[rightIndef];
     right.visible = true;
+        
+    const tweenLeft = this.tweens.add({
+        targets: left,
+        duration: 300,
+        hold: 700,
+        yoyo: false,
+        ease: 'Linear',
+        scaleX: 0.5,
+        scaleY: 0.5,
+        // onComplete: onCompleteHandler,
+        // onCompleteParams: [ textBlockBoy1 ]
+    });
+        
+    const tweenRight = this.tweens.add({
+        targets: right,
+        delay: 200,
+        duration: 300,
+        hold: 700,
+        yoyo: false,
+        ease: 'Linear',
+        scaleX: 0.5,
+        scaleY: 0.5,
+        // onComplete: onCompleteHandler,
+        // onCompleteParams: [ textBlockBoy1 ]
+    });
+    
+    // вешаем слушатель событий на каждый элемент группы
+    option.forEach(element => {
+        // console.log(element);
+        element.setInteractive();
+
+        //наведение курсора
+        element.on('pointerover', function (event) {
+            console.log('pointerover');
+            // this.setTint(0xff00);
+            this.setScale(0.55);
+            //  this.setShadow();
+        });
+
+        // снятие курсора
+        element.on('pointerout', function (event) {
+            console.log('pointerout');
+            this.clearTint();
+            this.setScale(0.5);
+        });
+
+        // клик
+        element.on('pointerup', function (event) {
+            console.log('pointerup');
+            // this.setTint(0xff00);
+            // this.setScale(0.55);
+            //  this.setShadow();
+        });
+    });
+
     // const t = new Phaser.Tween()
     //      console.log('tttttttttttttttttttttttttttttt', t)
 
@@ -321,6 +377,72 @@ function showOptions(option, leftIndex, rightIndef) {
     //     this.clearTint();
     //     this.setScale(0.5);
     // });
+
+    // var dress1 = optionsGroup.getChildren()[0];
+    //     dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
+    //     dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
+
+    //     // Обработка клика по опции выбора элемента
+    //     const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
+    //     console.log('jjjjjjjjjjjjjjjjjjjjj');
+
+    //     // скрываем изображение предыдущего персонажа
+    //     prev.setScale(0)
+    //     // prev.disableBody((true, true))
+
+    //     // скрываем изображение предыдущих опций
+    //     prevtOPtion1.setScale(0);
+    //     prevtOPtion2.setScale(0);
+
+    //     //создаем обновленного персонажа
+    //     this.add.image(300, 500, `${next}`);
+
+    //     //создаем новый набор опций
+    //     var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
+    //     var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
+
+    //     //анимация появления для опций
+    //     // var optionLeftTweens = this.tweens.add({
+    //     //     targets: nextOPtion1,
+    //     //     //  delay: 1000,
+    //     //     duration: 300,
+    //     //     hold: 700,
+    //     //     yoyo: false,
+    //     //     // repeat: 8,
+    //     //     ease: 'Linear',
+    //     //     scaleX: 1,
+    //     //     scaleY: 1,
+    //     //     // onComplete: onCompleteHandler,
+    //     //     // onCompleteParams: [ textBlockBoy1 ]
+    //     //  });
+        
+       
+
+    //     // this.add.sprite(300, 500, `${nextOPtion1}`);
+    //     // this.add.sprite(300, 500, `${nextOPtion2}`);
+
+    //     optionLeft.on('pointerover', function (event) {
+    //         this.setTint(0xff00);
+    //         this.setScale(1.05);
+    //     //  this.setShadow();
+    //     });
+
+    //     optionLeft.on('pointerout', function (event) {
+    //         this.clearTint();
+    //         this.setScale(1);
+    //     });
+        
+    //     optionRight.on('pointerover', function (event) {
+    //         this.setTint(0xff00);
+    //         this.setScale(1.05);
+    //         //  this.setShadow();
+    //     });
+
+    //     optionRight.on('pointerout', function (event) {
+    //         this.clearTint();
+    //         this.setScale(1);
+    //     });
+    // }
 }
 
         // showOptions()
@@ -333,354 +455,185 @@ function addSprites ()
     // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
 
     // var sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/input/cursors/pen.cur), pointer' });
-
-    setTimeout(() => {
-        girl2 = this.add.sprite(300, 500, 'girl2');
-        titleBlock = this.add.sprite(300, 31, 'titleBlock');
         // dress1 = this.add.sprite(155, 730, 'dress1').setScale(0.5).setInteractive({ cursor: url('../img/hand.png'), pointer});
 
-        // // создаем группу для опций выбора
-        // var optionsGroup = this.add.group();
+    setTimeout(() => {
+        // переключаем на персонажа girl2 
+        girl2 = this.add.sprite(300, 500, 'girl2').setScale(1.2);
+        var tweenGirl2 = this.tweens.add({
+            targets: girl2,
+            //  delay: 1000,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            ease: 'Linear',
+            scaleX: 1,
+            scaleY: 1,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
 
-        // optionsObjects.forEach(({leftOption, rightOption}) => {
-        //     var option = optionsGroup.createMultiple([
-        //         { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
-        //         { key: [rightOption], setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
-        //     ]);
-        // console.log(leftOption, rightOption)
-        // });
+        // выводим заголовок
+        // titleBlock = this.add.sprite(300, 31, 'titleBlock').setX(300).setY(-50);
+        titleBlock = this.add.sprite(300, -31, 'titleBlock');
 
+        var tweenTitleBlock = this.tweens.add({
+            targets: titleBlock,
+            //  delay: 1000,
+            duration: 500,
+            hold: 700,
+            yoyo: false,
+            ease: 'Linear',
+            y: 31,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
 
         // создаем группу для опций выбора
         var optionsGroup = this.add.group();
 
         // заполняем группу элементами
         optionsObjects.forEach(({leftOption, rightOption}) => {
-        optionsGroup.createMultiple([
-            { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
-            { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
-        ]);
+            optionsGroup.createMultiple([
+                { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
+                { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
+            ]);
             // console.log(leftOption, rightOption);
-        console.log('optionsGroup', optionsGroup.getChildren());
+        }); 
+        // console.log('optionsGroup', optionsGroup.getChildren());
+        /////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         const option = optionsGroup.getChildren();
-            console.log('option', option);
-            //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| create
-            // leftIndex, rightIndef
-            // let nf = showOptions.bind(Phaser)
-            // console.log(nf(option, 0, 1))
-            // // nf(option, 0, 1)
-            // showOptions(option, 0, 1);
-            /////////////////////////////////////////////////////////// вынести в отдельную функцию!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-             const left = option[0];
-    left.visible = true;
-    console.log("left", left)
-    
-    const right = option[1];
-            right.visible = true;
-            const tweenLeft = this.tweens.add({
-        targets: left,
-        duration: 300,
-        hold: 700,
-        yoyo: false,
-        ease: 'Linear',
-        scaleX: 0.5,
-        scaleY: 0.5,
-        // onComplete: onCompleteHandler,
-        // onCompleteParams: [ textBlockBoy1 ]
-    });
-        
-    const tweenRight = this.tweens.add({
-        targets: right,
-        delay: 200,
-        duration: 300,
-        hold: 700,
-        yoyo: false,
-        ease: 'Linear',
-        scaleX: 0.5,
-        scaleY: 0.5,
-        // onComplete: onCompleteHandler,
-        // onCompleteParams: [ textBlockBoy1 ]
-    });
-/////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        console.log('option', option);
+        //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| create
+        // leftIndex, rightIndef
+        // let nf = showOptions.bind(Phaser)
+        // console.log(nf(option, 0, 1))
+        // // nf(option, 0, 1)
+        // showOptions(option, 0, 1);
+        /////////////////////////////////////////////////////////// вынести в отдельную функцию!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var left = option[0];
+        left.visible = true;
+        console.log("left", left)
             
+        var right = option[1];
+        right.visible = true;
+        
+        const tweenLeft = this.tweens.add({
+            targets: left,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            ease: 'Linear',
+            scaleX: 0.5,
+            scaleY: 0.5,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
+            
+        const tweenRight = this.tweens.add({
+            targets: right,
+            delay: 200,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            ease: 'Linear',
+            scaleX: 0.5,
+            scaleY: 0.5,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
+        
         // вешаем слушатель событий на каждый элемент группы
-            option.forEach(element => {
-                // console.log(element);
-                element.setInteractive();
+        option.forEach(element => {
+            // console.log(element);
+            element.setInteractive();
 
-                element.on('pointerover', function (event) {
-                    console.log('pointerover');
-                    // this.setTint(0xff00);
-                    this.setScale(0.55);
-                    //  this.setShadow();
-                });
-
-                element.on('pointerout', function (event) {
-                    console.log('pointerout');
-                    this.clearTint();
-                    this.setScale(0.5);
-                });
+            //наведение курсора
+            element.on('pointerover', function (event) {
+                console.log('pointerover');
+                // this.setTint(0xff00);
+                this.setScale(0.55);
+                //  this.setShadow();
             });
 
-            // var dress1 = option[0];
-            // var dress1 = optionsGroup.getChildren()[0];
-            
+            // снятие курсора
+            element.on('pointerout', function (event) {
+                console.log('pointerout');
+                this.clearTint();
+                this.setScale(0.5);
+            });
 
-        // // dress11._eventsCount = 0
-        // // console.log('dress11', dress11._eventsCount);
-        // console.log('dress11', dress1.listeners('pointerover'));
-
-        // dress1.visible = true;
-
-
-            //                 option.forEach(element => {
-            //                     console.log('element', element);
-            //                     element.addListener('pointerover', (event) => {
-            //                         console.log('thisssssssssssssssssssss', this );
-                                    
-            //                         // this.setTint(0xff00);
-            //                         // this.setScale(0.55);
-            //                         //  this.setShadow();
-            //                     });
-            //                     console.log('listeners', element.listeners('pointerover'))
-            // //////////////////////////////////////////////////////////////////////
-            //                     // element.on('pointerout', (event) => {
-
-            //                     //     // this.clearTint();
-            //                     //     this.setScale(0.5);
-
-            //                     // }, this);
-
-            //                 // console.log('element', element.emit('pointerover'));
-
-                                
-            //                 });
-
-                    
-
-            //     option.on('pointerover', function (event) {
-
-            //     this.setTint(0xff00);
-            //     this.setScale(0.55);
-            //     //  this.setShadow();
-            // });
-        }); 
-        
-        
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // // dress1 = optionsGroup.getChildren()[0].visible = true;
-        // var dress1 = optionsGroup.getChildren()[0];
-        // var dress1 = option[0];
-
-        // // // dress11._eventsCount = 0
-        // // // console.log('dress11', dress11._eventsCount);
-        // console.log('dress11', dress1);
-
-        // dress1.visible = true;
-        // // // dress11.setScale = 0;
-        // dress1.on('pointerover', function (event) {
-        //     console.log('thisssssssssssssssssssss', this );
-        //     this.setTint(0xff00);
-        //     this.setScale(0.55);
-        //         //  this.setShadow();
-        // });
-        // console.log('listeners', dress1.listeners('pointerover'))
-
-
-        var dress22 = optionsGroup.getChildren()[1];
-        dress22.visible = true;
-
-        // // console.log(dress11.texture.key)
-
-        // var tweenDress11 = this.tweens.add({
-        //         targets: dress11,
-        //         //  delay: 1000,
-        //         duration: 300,
-        //         hold: 700,
-        //         yoyo: false,
-        //         // repeat: 8,
-        //         ease: 'Linear',
-        //         scaleX: 0.5,
-        //         scaleY: 0.5,
-        //         // onComplete: onCompleteHandler,
-        //         // onCompleteParams: [ textBlockBoy1 ]
-        // });
-        
-        // var tweenDress22 = this.tweens.add({
-        //         targets: dress22,
-        //         delay: 200,
-        //         duration: 300,
-        //         hold: 700,
-        //         yoyo: false,
-        //         // repeat: 8,
-        //         ease: 'Linear',
-        //         scaleX: 0.5,
-        //         scaleY: 0.5,
-        //         // onComplete: onCompleteHandler,
-        //         // onCompleteParams: [ textBlockBoy1 ]
-        //     });
-
-
-        // dress1 = this.add.sprite(155, 730, 'dress1').setScale(0).setInteractive();
-        // console.log('dress1', dress1);
-        dress2 = this.add.sprite(445, 730, 'dress2').setScale(0).setInteractive();
-        console.log('dress2', dress2);
-
-        //////////////////////////////////////////////////////////////// test
-        // var d = [dress2, dress2, dress2, dress2]
-        //  console.log('ddddddddddddddddddddddddddddddd', d);
-
-        //  d.forEach(element => {
-        //     // console.log(element)
-        //     // element.shutdown();
-        //     // console.log('listegggggggggggggners', element.listeners('pointerover'))
-        //     element.on('pointerover', (event) => {
-        //             console.log('thisssssssssssssssssssss', event );
-        //             // this.setTint(0xff00);
-        //             // this.setScale(0.55);
-        //             //  this.setShadow();
-        //     });
-        //     console.log('listddddddddddddddddddddddddddddddddddddddddddeners', element.listeners('pointerover'))
-        // })
-
-        // // onTweens(dress1, 0, 500)
-         console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', this)
-        var tweenDress1 = this.tweens.add({
-            targets: dress1,
-            //  delay: 1000,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
-            // repeat: 8,
-            ease: 'Linear',
-            scaleX: 0.5,
-            scaleY: 0.5,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
-         });
-        
-        var tweenDress2 = this.tweens.add({
-            targets: dress2,
-             delay: 200,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
-            // repeat: 8,
-            ease: 'Linear',
-            scaleX: 0.5,
-            scaleY: 0.5,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
-        });
-        
-
-        // dress1.on('pointerover', function (event) {
-
-        //     this.setTint(0xff00);
-        //     this.setScale(0.55);
-        //     //  this.setShadow();
-        // });
-
-        // dress1.on('pointerout', function (event) {
-
-        //     this.clearTint();
-        //     this.setScale(0.5);
-
-        // });
-            
-        dress2.on('pointerover', function (event) {
-
-                        console.log('thisssssssssssssssssssss222222222222222222222', this );
-
-            this.setTint(0xff00);
-            this.setScale(0.55);
+            // клик
+            element.on('pointerup', function (event) {
+                console.log('pointerup');
+                // this.setTint(0xff00);
+                // this.setScale(0.55);
                 //  this.setShadow();
+
+                left.visible = false;
+                right.visible = false;
+                
+
+                left = option[2];
+                left.visible = true;
+                left.setScale(1);
+                console.log("left", left);
+
+                right = option[3];
+                right.visible = true;
+                right.setScale(1);
+
+
+                
+                //  this.tweens.add({
+                //     targets: left,
+                //     duration: 300,
+                //     hold: 700,
+                //     yoyo: false,
+                //     ease: 'Linear',
+                //     scaleX: 0.5,
+                //     scaleY: 0.5,
+                //     // onComplete: onCompleteHandler,
+                //     // onCompleteParams: [ textBlockBoy1 ]
+                // });
+                    
+                // this.tweens.add({
+                //     targets: right,
+                //     delay: 200,
+                //     duration: 300,
+                //     hold: 700,
+                //     yoyo: false,
+                //     ease: 'Linear',
+                //     scaleX: 0.5,
+                //     scaleY: 0.5,
+                //     // onComplete: onCompleteHandler,
+                //     // onCompleteParams: [ textBlockBoy1 ]
+                // });
+            });
         });
-
-        dress2.on('pointerout', function (event) {
-
-            this.clearTint();
-            this.setScale(0.5);
-
-        });
-        
-        console.log('listeners dress2', dress2.listeners('pointerover'))
-        
-        // dress1.addListener('pointerup', () => {
-        //     console.log('jjjjjjjjjjjjjjjjjjjjj')
-        //     girl2.setScale(0)
-        //     this.add.sprite(300, 500, 'girl1-dress');
-
-        // })
-
-        var dress1 = optionsGroup.getChildren()[0];
-        dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
-        dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
 
         // Обработка клика по опции выбора элемента
         const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
-        console.log('jjjjjjjjjjjjjjjjjjjjj');
+            console.log('jjjjjjjjjjjjjjjjjjjjj');
 
-        // скрываем изображение предыдущего персонажа
-        prev.setScale(0)
-        // prev.disableBody((true, true))
+            // скрываем изображение предыдущего персонажа
+            prev.setScale(0)
+            // prev.disableBody((true, true))
 
-        // скрываем изображение предыдущих опций
-        prevtOPtion1.setScale(0);
-        prevtOPtion2.setScale(0);
+            // скрываем изображение предыдущих опций
+            prevtOPtion1.setScale(0);
+            prevtOPtion2.setScale(0);
 
-        //создаем обновленного персонажа
-        this.add.image(300, 500, `${next}`);
+            //создаем обновленного персонажа
+            this.add.image(300, 500, `${next}`);
 
-        //создаем новый набор опций
-        var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
-        var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
+            //создаем новый набор опций
+            var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
+            var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
+        }
 
-        //анимация появления для опций
-        // var optionLeftTweens = this.tweens.add({
-        //     targets: nextOPtion1,
-        //     //  delay: 1000,
-        //     duration: 300,
-        //     hold: 700,
-        //     yoyo: false,
-        //     // repeat: 8,
-        //     ease: 'Linear',
-        //     scaleX: 1,
-        //     scaleY: 1,
-        //     // onComplete: onCompleteHandler,
-        //     // onCompleteParams: [ textBlockBoy1 ]
-        //  });
-        
-       
-
-        // this.add.sprite(300, 500, `${nextOPtion1}`);
-        // this.add.sprite(300, 500, `${nextOPtion2}`);
-
-        optionLeft.on('pointerover', function (event) {
-            this.setTint(0xff00);
-            this.setScale(1.05);
-        //  this.setShadow();
-        });
-
-        optionLeft.on('pointerout', function (event) {
-            this.clearTint();
-            this.setScale(1);
-        });
-        
-        optionRight.on('pointerover', function (event) {
-            this.setTint(0xff00);
-            this.setScale(1.05);
-            //  this.setShadow();
-        });
-
-        optionRight.on('pointerout', function (event) {
-            this.clearTint();
-            this.setScale(1);
-        });
-    }
-    /////////////////
+            
     }, 2400)
     
     var room = this.add.image(300, 450, 'room');
@@ -910,3 +863,262 @@ function onCompleteHandlerGirl (tween, targets, myImage)
 
 //     this.load.start();
 // }
+
+/////////////////////////////////////////////// ВАЖНО!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// var dress1 = option[0];
+            // var dress1 = optionsGroup.getChildren()[0];
+            
+
+        // // dress11._eventsCount = 0
+        // // console.log('dress11', dress11._eventsCount);
+        // console.log('dress11', dress1.listeners('pointerover'));
+
+        // dress1.visible = true;
+
+
+            //                 option.forEach(element => {
+            //                     console.log('element', element);
+            //                     element.addListener('pointerover', (event) => {
+            //                         console.log('thisssssssssssssssssssss', this );
+                                    
+            //                         // this.setTint(0xff00);
+            //                         // this.setScale(0.55);
+            //                         //  this.setShadow();
+            //                     });
+            //                     console.log('listeners', element.listeners('pointerover'))
+            // //////////////////////////////////////////////////////////////////////
+            //                     // element.on('pointerout', (event) => {
+
+            //                     //     // this.clearTint();
+            //                     //     this.setScale(0.5);
+
+            //                     // }, this);
+
+            //                 // console.log('element', element.emit('pointerover'));
+
+                                
+            //                 });
+
+                    
+
+            //     option.on('pointerover', function (event) {
+
+            //     this.setTint(0xff00);
+            //     this.setScale(0.55);
+            //     //  this.setShadow();
+            // });
+        
+        
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // // dress1 = optionsGroup.getChildren()[0].visible = true;
+        // var dress1 = optionsGroup.getChildren()[0];
+        // var dress1 = option[0];
+
+        // // // dress11._eventsCount = 0
+        // // // console.log('dress11', dress11._eventsCount);
+        // console.log('dress11', dress1);
+
+        // dress1.visible = true;
+        // // // dress11.setScale = 0;
+        // dress1.on('pointerover', function (event) {
+        //     console.log('thisssssssssssssssssssss', this );
+        //     this.setTint(0xff00);
+        //     this.setScale(0.55);
+        //         //  this.setShadow();
+        // });
+        // console.log('listeners', dress1.listeners('pointerover'))
+
+
+        // var dress22 = optionsGroup.getChildren()[1];
+        // dress22.visible = true;
+
+        // // console.log(dress11.texture.key)
+
+        // var tweenDress11 = this.tweens.add({
+        //         targets: dress11,
+        //         //  delay: 1000,
+        //         duration: 300,
+        //         hold: 700,
+        //         yoyo: false,
+        //         // repeat: 8,
+        //         ease: 'Linear',
+        //         scaleX: 0.5,
+        //         scaleY: 0.5,
+        //         // onComplete: onCompleteHandler,
+        //         // onCompleteParams: [ textBlockBoy1 ]
+        // });
+        
+        // var tweenDress22 = this.tweens.add({
+        //         targets: dress22,
+        //         delay: 200,
+        //         duration: 300,
+        //         hold: 700,
+        //         yoyo: false,
+        //         // repeat: 8,
+        //         ease: 'Linear',
+        //         scaleX: 0.5,
+        //         scaleY: 0.5,
+        //         // onComplete: onCompleteHandler,
+        //         // onCompleteParams: [ textBlockBoy1 ]
+        //     });
+
+
+        // dress1 = this.add.sprite(155, 730, 'dress1').setScale(0).setInteractive();
+        // console.log('dress1', dress1);
+        // dress2 = this.add.sprite(445, 730, 'dress2').setScale(0).setInteractive();
+        // console.log('dress2', dress2);
+
+        //////////////////////////////////////////////////////////////// test
+        // var d = [dress2, dress2, dress2, dress2]
+        //  console.log('ddddddddddddddddddddddddddddddd', d);
+
+        //  d.forEach(element => {
+        //     // console.log(element)
+        //     // element.shutdown();
+        //     // console.log('listegggggggggggggners', element.listeners('pointerover'))
+        //     element.on('pointerover', (event) => {
+        //             console.log('thisssssssssssssssssssss', event );
+        //             // this.setTint(0xff00);
+        //             // this.setScale(0.55);
+        //             //  this.setShadow();
+        //     });
+        //     console.log('listddddddddddddddddddddddddddddddddddddddddddeners', element.listeners('pointerover'))
+        // })
+
+        // // onTweens(dress1, 0, 500)
+        //  console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', this)
+        // var tweenDress1 = this.tweens.add({
+        //     targets: dress1,
+        //     //  delay: 1000,
+        //     duration: 300,
+        //     hold: 700,
+        //     yoyo: false,
+        //     // repeat: 8,
+        //     ease: 'Linear',
+        //     scaleX: 0.5,
+        //     scaleY: 0.5,
+        //     // onComplete: onCompleteHandler,
+        //     // onCompleteParams: [ textBlockBoy1 ]
+        //  });
+        
+        // var tweenDress2 = this.tweens.add({
+        //     targets: dress2,
+        //      delay: 200,
+        //     duration: 300,
+        //     hold: 700,
+        //     yoyo: false,
+        //     // repeat: 8,
+        //     ease: 'Linear',
+        //     scaleX: 0.5,
+        //     scaleY: 0.5,
+        //     // onComplete: onCompleteHandler,
+        //     // onCompleteParams: [ textBlockBoy1 ]
+        // });
+        
+
+        // dress1.on('pointerover', function (event) {
+
+        //     this.setTint(0xff00);
+        //     this.setScale(0.55);
+        //     //  this.setShadow();
+        // });
+
+        // dress1.on('pointerout', function (event) {
+
+        //     this.clearTint();
+        //     this.setScale(0.5);
+
+        // });
+            
+        // dress2.on('pointerover', function (event) {
+
+        //                 console.log('thisssssssssssssssssssss222222222222222222222', this );
+
+        //     this.setTint(0xff00);
+        //     this.setScale(0.55);
+        //         //  this.setShadow();
+        // });
+
+        // dress2.on('pointerout', function (event) {
+
+        //     this.clearTint();
+        //     this.setScale(0.5);
+
+        // });
+        
+        // console.log('listeners dress2', dress2.listeners('pointerover'))
+        
+        // dress1.addListener('pointerup', () => {
+        //     console.log('jjjjjjjjjjjjjjjjjjjjj')
+        //     girl2.setScale(0)
+        //     this.add.sprite(300, 500, 'girl1-dress');
+
+        // })
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //     var dress1 = optionsGroup.getChildren()[0];
+    //     dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
+    //     dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
+
+    //     // Обработка клика по опции выбора элемента
+    //     const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
+    //     console.log('jjjjjjjjjjjjjjjjjjjjj');
+
+    //     // скрываем изображение предыдущего персонажа
+    //     prev.setScale(0)
+    //     // prev.disableBody((true, true))
+
+    //     // скрываем изображение предыдущих опций
+    //     prevtOPtion1.setScale(0);
+    //     prevtOPtion2.setScale(0);
+
+    //     //создаем обновленного персонажа
+    //     this.add.image(300, 500, `${next}`);
+
+    //     //создаем новый набор опций
+    //     var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
+    //     var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
+
+    //     //анимация появления для опций
+    //     // var optionLeftTweens = this.tweens.add({
+    //     //     targets: nextOPtion1,
+    //     //     //  delay: 1000,
+    //     //     duration: 300,
+    //     //     hold: 700,
+    //     //     yoyo: false,
+    //     //     // repeat: 8,
+    //     //     ease: 'Linear',
+    //     //     scaleX: 1,
+    //     //     scaleY: 1,
+    //     //     // onComplete: onCompleteHandler,
+    //     //     // onCompleteParams: [ textBlockBoy1 ]
+    //     //  });
+        
+       
+
+    //     // this.add.sprite(300, 500, `${nextOPtion1}`);
+    //     // this.add.sprite(300, 500, `${nextOPtion2}`);
+
+    //     optionLeft.on('pointerover', function (event) {
+    //         this.setTint(0xff00);
+    //         this.setScale(1.05);
+    //     //  this.setShadow();
+    //     });
+
+    //     optionLeft.on('pointerout', function (event) {
+    //         this.clearTint();
+    //         this.setScale(1);
+    //     });
+        
+    //     optionRight.on('pointerover', function (event) {
+    //         this.setTint(0xff00);
+    //         this.setScale(1.05);
+    //         //  this.setShadow();
+    //     });
+
+    //     optionRight.on('pointerout', function (event) {
+    //         this.clearTint();
+    //         this.setScale(1);
+    //     });
+    // }
+    /////////////////
