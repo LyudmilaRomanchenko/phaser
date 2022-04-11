@@ -253,11 +253,86 @@ function create ()
     
 }
 
+// функция добавления опций
+function showOptions(option, leftIndex, rightIndef) {
+        //  console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', window.Phaser)
 
+    const left = option[leftIndex];
+    left.visible = true;
+    console.log("left", left)
+    
+    const right = option[rightIndef];
+    right.visible = true;
+    // const t = new Phaser.Tween()
+    //      console.log('tttttttttttttttttttttttttttttt', t)
+
+    
+    // const tweenLeft = this.tweens.add({
+    //     targets: left,
+    //     duration: 300,
+    //     hold: 700,
+    //     yoyo: false,
+    //     ease: 'Linear',
+    //     scaleX: 0.5,
+    //     scaleY: 0.5,
+    //     // onComplete: onCompleteHandler,
+    //     // onCompleteParams: [ textBlockBoy1 ]
+    // });
+        
+    // const tweenRight = this.tweens.add({
+    //     targets: right,
+    //     delay: 200,
+    //     duration: 300,
+    //     hold: 700,
+    //     yoyo: false,
+    //     ease: 'Linear',
+    //     scaleX: 0.5,
+    //     scaleY: 0.5,
+    //     // onComplete: onCompleteHandler,
+    //     // onCompleteParams: [ textBlockBoy1 ]
+    // });
+
+    // left.on('pointerover', () => sss() );
+
+    // const sss = () => {
+    //     console.log('kkkkkkkkk');
+    //     this.setTint(0xff00);
+    //     this.setScale(0.55);
+    //     //  this.setShadow();
+    // }
+
+    // console.log("left1", left)
+
+    // left.on('pointerout', function (event) {
+
+    //     this.clearTint();
+    //     this.setScale(0.5);
+
+    // });
+        
+    // right.on('pointerover', function (event) {
+
+    //     this.setTint(0xff00);
+    //     this.setScale(0.55);
+    //         //  this.setShadow();
+    // });
+
+    // right.on('pointerout', function (event) {
+    //     this.clearTint();
+    //     this.setScale(0.5);
+    // });
+}
+
+        // showOptions()
 
 function addSprites ()
 {
     // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
+    //  hand = this.add.sprite(300, 500, 'hand'); 
+               // cursor
+    // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
+
+    // var sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/input/cursors/pen.cur), pointer' });
 
     setTimeout(() => {
         girl2 = this.add.sprite(300, 500, 'girl2');
@@ -277,31 +352,110 @@ function addSprites ()
 
 
         // создаем группу для опций выбора
-            var optionsGroup = this.add.group();
+        var optionsGroup = this.add.group();
 
-            optionsObjects.forEach(({leftOption, rightOption}) => {
-            var option = optionsGroup.createMultiple([
-                { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
-                { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
-            ]);
-                console.log(leftOption, rightOption);
-                console.log(option);
+        // заполняем группу элементами
+        optionsObjects.forEach(({leftOption, rightOption}) => {
+        optionsGroup.createMultiple([
+            { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
+            { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
+        ]);
+            // console.log(leftOption, rightOption);
+        console.log('optionsGroup', optionsGroup.getChildren());
+        
+        const option = optionsGroup.getChildren();
+            console.log('option', option);
+            //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| create
+            // leftIndex, rightIndef
+            // let nf = showOptions.bind(Phaser)
+            // console.log(nf(option, 0, 1))
+            // // nf(option, 0, 1)
+            // showOptions(option, 0, 1);
+            /////////////////////////////////////////////////////////// вынести в отдельную функцию!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             const left = option[0];
+    left.visible = true;
+    console.log("left", left)
+    
+    const right = option[1];
+            right.visible = true;
+            const tweenLeft = this.tweens.add({
+        targets: left,
+        duration: 300,
+        hold: 700,
+        yoyo: false,
+        ease: 'Linear',
+        scaleX: 0.5,
+        scaleY: 0.5,
+        // onComplete: onCompleteHandler,
+        // onCompleteParams: [ textBlockBoy1 ]
+    });
+        
+    const tweenRight = this.tweens.add({
+        targets: right,
+        delay: 200,
+        duration: 300,
+        hold: 700,
+        yoyo: false,
+        ease: 'Linear',
+        scaleX: 0.5,
+        scaleY: 0.5,
+        // onComplete: onCompleteHandler,
+        // onCompleteParams: [ textBlockBoy1 ]
+    });
+/////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+        // вешаем слушатель событий на каждый элемент группы
+            option.forEach(element => {
+                // console.log(element);
+                element.setInteractive();
 
-                // option.forEach(element => {
-                //     element.on('pointerover',  (event) => {
-                //         this.setTint(0xff00);
-                //         this.setScale(0.55);
-                //         //  this.setShadow();
-                //     });
+                element.on('pointerover', function (event) {
+                    console.log('pointerover');
+                    // this.setTint(0xff00);
+                    this.setScale(0.55);
+                    //  this.setShadow();
+                });
 
-                //     element.on('pointerout', (event) => {
+                element.on('pointerout', function (event) {
+                    console.log('pointerout');
+                    this.clearTint();
+                    this.setScale(0.5);
+                });
+            });
 
-                //         this.clearTint();
-                //         this.setScale(0.5);
+            // var dress1 = option[0];
+            // var dress1 = optionsGroup.getChildren()[0];
+            
 
-                //     });
-                    
-                // });
+        // // dress11._eventsCount = 0
+        // // console.log('dress11', dress11._eventsCount);
+        // console.log('dress11', dress1.listeners('pointerover'));
+
+        // dress1.visible = true;
+
+
+            //                 option.forEach(element => {
+            //                     console.log('element', element);
+            //                     element.addListener('pointerover', (event) => {
+            //                         console.log('thisssssssssssssssssssss', this );
+                                    
+            //                         // this.setTint(0xff00);
+            //                         // this.setScale(0.55);
+            //                         //  this.setShadow();
+            //                     });
+            //                     console.log('listeners', element.listeners('pointerover'))
+            // //////////////////////////////////////////////////////////////////////
+            //                     // element.on('pointerout', (event) => {
+
+            //                     //     // this.clearTint();
+            //                     //     this.setScale(0.5);
+
+            //                     // }, this);
+
+            //                 // console.log('element', element.emit('pointerover'));
+
+                                
+            //                 });
 
                     
 
@@ -311,79 +465,32 @@ function addSprites ()
             //     this.setScale(0.55);
             //     //  this.setShadow();
             // });
-            }); 
+        }); 
         
         
-        // функция добавления опций
-        const addOptions = () => {
-            const left = optionsGroup.getChildren()[0];
-            left.visible = true;
-            console.log("left", left.eventNames())
-            
-            const right = optionsGroup.getChildren()[1];
-            right.visible = true;
-            
-            const tweenLeft = this.tweens.add({
-                targets: left,
-                duration: 300,
-                hold: 700,
-                yoyo: false,
-                ease: 'Linear',
-                scaleX: 0.5,
-                scaleY: 0.5,
-                // onComplete: onCompleteHandler,
-                // onCompleteParams: [ textBlockBoy1 ]
-            });
-                
-            const tweenRight = this.tweens.add({
-                targets: right,
-                delay: 200,
-                duration: 300,
-                hold: 700,
-                yoyo: false,
-                ease: 'Linear',
-                scaleX: 0.5,
-                scaleY: 0.5,
-                // onComplete: onCompleteHandler,
-                // onCompleteParams: [ textBlockBoy1 ]
-            });
-
-            left.addListener('pointerover', (event) => {
-
-                this.setTint(0xff00);
-                this.setScale(0.55);
-                //  this.setShadow();
-            }, this);
-
-            left.on('pointerout', function (event) {
-
-                this.clearTint();
-                this.setScale(0.5);
-
-            });
-                
-            right.on('pointerover', function (event) {
-
-                this.setTint(0xff00);
-                this.setScale(0.55);
-                    //  this.setShadow();
-            });
-
-            right.on('pointerout', function (event) {
-                this.clearTint();
-                this.setScale(0.5);
-            });
-        }
-
-        addOptions()
-
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////
         // // dress1 = optionsGroup.getChildren()[0].visible = true;
-        // var dress11 = optionsGroup.getChildren()[0];
-        // dress11.visible = true;
-        // // dress11.setScale = 0;
+        // var dress1 = optionsGroup.getChildren()[0];
+        // var dress1 = option[0];
 
-        // var dress22 = optionsGroup.getChildren()[1];
-        // dress22.visible = true;
+        // // // dress11._eventsCount = 0
+        // // // console.log('dress11', dress11._eventsCount);
+        // console.log('dress11', dress1);
+
+        // dress1.visible = true;
+        // // // dress11.setScale = 0;
+        // dress1.on('pointerover', function (event) {
+        //     console.log('thisssssssssssssssssssss', this );
+        //     this.setTint(0xff00);
+        //     this.setScale(0.55);
+        //         //  this.setShadow();
+        // });
+        // console.log('listeners', dress1.listeners('pointerover'))
+
+
+        var dress22 = optionsGroup.getChildren()[1];
+        dress22.visible = true;
 
         // // console.log(dress11.texture.key)
 
@@ -417,57 +524,75 @@ function addSprites ()
 
 
         // dress1 = this.add.sprite(155, 730, 'dress1').setScale(0).setInteractive();
-        // console.log('dress1', dress1.eventNames())
-        // dress2 = this.add.sprite(445, 730, 'dress2').setScale(0).setInteractive();
+        // console.log('dress1', dress1);
+        dress2 = this.add.sprite(445, 730, 'dress2').setScale(0).setInteractive();
+        console.log('dress2', dress2);
+
+        //////////////////////////////////////////////////////////////// test
+        // var d = [dress2, dress2, dress2, dress2]
+        //  console.log('ddddddddddddddddddddddddddddddd', d);
+
+        //  d.forEach(element => {
+        //     // console.log(element)
+        //     // element.shutdown();
+        //     // console.log('listegggggggggggggners', element.listeners('pointerover'))
+        //     element.on('pointerover', (event) => {
+        //             console.log('thisssssssssssssssssssss', event );
+        //             // this.setTint(0xff00);
+        //             // this.setScale(0.55);
+        //             //  this.setShadow();
+        //     });
+        //     console.log('listddddddddddddddddddddddddddddddddddddddddddeners', element.listeners('pointerover'))
+        // })
+
         // // onTweens(dress1, 0, 500)
-        // var tweenDress1 = this.tweens.add({
-        //     targets: dress1,
-        //     //  delay: 1000,
-        //     duration: 300,
-        //     hold: 700,
-        //     yoyo: false,
-        //     // repeat: 8,
-        //     ease: 'Linear',
-        //     scaleX: 0.5,
-        //     scaleY: 0.5,
-        //     // onComplete: onCompleteHandler,
-        //     // onCompleteParams: [ textBlockBoy1 ]
-        //  });
+         console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', this)
+        var tweenDress1 = this.tweens.add({
+            targets: dress1,
+            //  delay: 1000,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            // repeat: 8,
+            ease: 'Linear',
+            scaleX: 0.5,
+            scaleY: 0.5,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+         });
         
-        // var tweenDress2 = this.tweens.add({
-        //     targets: dress2,
-        //      delay: 200,
-        //     duration: 300,
-        //     hold: 700,
-        //     yoyo: false,
-        //     // repeat: 8,
-        //     ease: 'Linear',
-        //     scaleX: 0.5,
-        //     scaleY: 0.5,
-        //     // onComplete: onCompleteHandler,
-        //     // onCompleteParams: [ textBlockBoy1 ]
+        var tweenDress2 = this.tweens.add({
+            targets: dress2,
+             delay: 200,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            // repeat: 8,
+            ease: 'Linear',
+            scaleX: 0.5,
+            scaleY: 0.5,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
+        
+
+        // dress1.on('pointerover', function (event) {
+
+        //     this.setTint(0xff00);
+        //     this.setScale(0.55);
+        //     //  this.setShadow();
         // });
-        //  hand = this.add.sprite(300, 500, 'hand'); 
-               // cursor
-    // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
 
-    // var sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/input/cursors/pen.cur), pointer' });
+        // dress1.on('pointerout', function (event) {
 
-        dress1.on('pointerover', function (event) {
+        //     this.clearTint();
+        //     this.setScale(0.5);
 
-            this.setTint(0xff00);
-            this.setScale(0.55);
-            //  this.setShadow();
-        });
-
-        dress1.on('pointerout', function (event) {
-
-            this.clearTint();
-            this.setScale(0.5);
-
-        });
+        // });
             
         dress2.on('pointerover', function (event) {
+
+                        console.log('thisssssssssssssssssssss222222222222222222222', this );
 
             this.setTint(0xff00);
             this.setScale(0.55);
@@ -479,7 +604,9 @@ function addSprites ()
             this.clearTint();
             this.setScale(0.5);
 
-     });
+        });
+        
+        console.log('listeners dress2', dress2.listeners('pointerover'))
         
         // dress1.addListener('pointerup', () => {
         //     console.log('jjjjjjjjjjjjjjjjjjjjj')
@@ -488,6 +615,7 @@ function addSprites ()
 
         // })
 
+        var dress1 = optionsGroup.getChildren()[0];
         dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
         dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
 
@@ -553,7 +681,7 @@ function addSprites ()
         });
     }
     /////////////////
-    }, 2300)
+    }, 2400)
     
     var room = this.add.image(300, 450, 'room');
     room.setTint(0x3B3B3B);
@@ -642,7 +770,7 @@ function addSprites ()
         onCompleteParams: [ textBlockGirl1 ]
      });
     
-    console.log(girl1)
+    // console.log(girl1)
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     // // создаем группу для опций выбора
@@ -657,6 +785,8 @@ function addSprites ()
     // Phaser.Actions.SetXY(optionsGroup.getChildren()[0], 155, 730);
     // console.log(optionsGroup.getChildren()[0], optionsGroup.getChildren()[1]);
 }
+
+
 
 
 
