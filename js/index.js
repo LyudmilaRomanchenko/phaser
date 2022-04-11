@@ -163,7 +163,7 @@ const playObjects = [
 const optionsObjects = [
     {
         leftOption: 'dress1',
-        rightOption: 'dress2',
+        rightOption: 'suit',
     },
     {
         leftOption: 'bag1',
@@ -186,8 +186,8 @@ var boy1;
 var girl1;
 var girl2;
 var titleBlock;
-var dress1;
-var dress2;
+// var dress1;
+// var dress2;
 var hand;
 // var optionsGroup;
 
@@ -224,7 +224,7 @@ function preload ()
 
     //загрузка изображений выбора элемента
     this.load.spritesheet('dress1', '../img/dress1.png', { frameWidth: 500, frameHeight: 552 });
-    this.load.spritesheet('dress2', '../img/dress2.png', { frameWidth: 500, frameHeight: 552 });
+    this.load.spritesheet('suit', '../img/suit.png', { frameWidth: 500, frameHeight: 552 });
     this.load.spritesheet('bag1', '../img/bag1.png', { frameWidth: 500, frameHeight: 552 });
     this.load.spritesheet('bag2', '../img/bag2.png', { frameWidth: 500, frameHeight: 552 });
     this.load.spritesheet('glasses', '../img/glasses.png', { frameWidth: 500, frameHeight: 552 });
@@ -254,201 +254,203 @@ function create ()
 }
 
 // функция добавления опций
-function showOptions(option, leftIndex, rightIndef) {
-        //  console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', window.Phaser)
+// function showOptions(option, leftIndex, rightIndef) {
+//         //  console.log('tweenDreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeess1', window.Phaser)
 
-    const left = option[leftIndex];
-    left.visible = true;
-    left.setScale = { x: 0.5, y: 0.5 }
-    console.log("left", left)
+//     const left = option[leftIndex];
+//     left.visible = true;
+//     left.setScale = { x: 0.5, y: 0.5 }
+//     console.log("left", left)
     
-    const right = option[rightIndef];
-    right.visible = true;
+//     const right = option[rightIndef];
+//     right.visible = true;
         
-    const tweenLeft = this.tweens.add({
-        targets: left,
-        duration: 300,
-        hold: 700,
-        yoyo: false,
-        ease: 'Linear',
-        scaleX: 0.5,
-        scaleY: 0.5,
-        // onComplete: onCompleteHandler,
-        // onCompleteParams: [ textBlockBoy1 ]
-    });
+//     const tweenLeft = this.tweens.add({
+//         targets: left,
+//         duration: 300,
+//         hold: 700,
+//         yoyo: false,
+//         ease: 'Linear',
+//         scaleX: 0.5,
+//         scaleY: 0.5,
+//         // onComplete: onCompleteHandler,
+//         // onCompleteParams: [ textBlockBoy1 ]
+//     });
         
-    const tweenRight = this.tweens.add({
-        targets: right,
-        delay: 200,
-        duration: 300,
-        hold: 700,
-        yoyo: false,
-        ease: 'Linear',
-        scaleX: 0.5,
-        scaleY: 0.5,
-        // onComplete: onCompleteHandler,
-        // onCompleteParams: [ textBlockBoy1 ]
-    });
+//     const tweenRight = this.tweens.add({
+//         targets: right,
+//         delay: 200,
+//         duration: 300,
+//         hold: 700,
+//         yoyo: false,
+//         ease: 'Linear',
+//         scaleX: 0.5,
+//         scaleY: 0.5,
+//         // onComplete: onCompleteHandler,
+//         // onCompleteParams: [ textBlockBoy1 ]
+//     });
     
-    // вешаем слушатель событий на каждый элемент группы
-    option.forEach(element => {
-        // console.log(element);
-        element.setInteractive();
+//     // вешаем слушатель событий на каждый элемент группы
+//     option.forEach(element => {
+//         // console.log(element);
+//         element.setInteractive();
 
-        //наведение курсора
-        element.on('pointerover', function (event) {
-            console.log('pointerover');
-            // this.setTint(0xff00);
-            this.setScale(0.55);
-            //  this.setShadow();
-        });
+//         //наведение курсора
+//         element.on('pointerover', function (event) {
+//             console.log('pointerover');
+//             // this.setTint(0xff00);
+//             this.setScale(0.55);
+//             //  this.setShadow();
+//         });
 
-        // снятие курсора
-        element.on('pointerout', function (event) {
-            console.log('pointerout');
-            this.clearTint();
-            this.setScale(0.5);
-        });
+//         // снятие курсора
+//         element.on('pointerout', function (event) {
+//             console.log('pointerout');
+//             this.clearTint();
+//             this.setScale(0.5);
+//         });
 
-        // клик
-        element.on('pointerup', function (event) {
-            console.log('pointerup');
-            // this.setTint(0xff00);
-            // this.setScale(0.55);
-            //  this.setShadow();
-        });
-    });
+//         // клик
+//         element.on('pointerup', function (event) {
+//             console.log('pointerup');
+//             // this.setTint(0xff00);
+//             // this.setScale(0.55);
+//             //  this.setShadow();
+//         });
+//     });
 
-    // const t = new Phaser.Tween()
-    //      console.log('tttttttttttttttttttttttttttttt', t)
+//     // const t = new Phaser.Tween()
+//     //      console.log('tttttttttttttttttttttttttttttt', t)
 
     
-    // const tweenLeft = this.tweens.add({
-    //     targets: left,
-    //     duration: 300,
-    //     hold: 700,
-    //     yoyo: false,
-    //     ease: 'Linear',
-    //     scaleX: 0.5,
-    //     scaleY: 0.5,
-    //     // onComplete: onCompleteHandler,
-    //     // onCompleteParams: [ textBlockBoy1 ]
-    // });
+//     // const tweenLeft = this.tweens.add({
+//     //     targets: left,
+//     //     duration: 300,
+//     //     hold: 700,
+//     //     yoyo: false,
+//     //     ease: 'Linear',
+//     //     scaleX: 0.5,
+//     //     scaleY: 0.5,
+//     //     // onComplete: onCompleteHandler,
+//     //     // onCompleteParams: [ textBlockBoy1 ]
+//     // });
         
-    // const tweenRight = this.tweens.add({
-    //     targets: right,
-    //     delay: 200,
-    //     duration: 300,
-    //     hold: 700,
-    //     yoyo: false,
-    //     ease: 'Linear',
-    //     scaleX: 0.5,
-    //     scaleY: 0.5,
-    //     // onComplete: onCompleteHandler,
-    //     // onCompleteParams: [ textBlockBoy1 ]
-    // });
+//     // const tweenRight = this.tweens.add({
+//     //     targets: right,
+//     //     delay: 200,
+//     //     duration: 300,
+//     //     hold: 700,
+//     //     yoyo: false,
+//     //     ease: 'Linear',
+//     //     scaleX: 0.5,
+//     //     scaleY: 0.5,
+//     //     // onComplete: onCompleteHandler,
+//     //     // onCompleteParams: [ textBlockBoy1 ]
+//     // });
 
-    // left.on('pointerover', () => sss() );
+//     // left.on('pointerover', () => sss() );
 
-    // const sss = () => {
-    //     console.log('kkkkkkkkk');
-    //     this.setTint(0xff00);
-    //     this.setScale(0.55);
-    //     //  this.setShadow();
-    // }
+//     // const sss = () => {
+//     //     console.log('kkkkkkkkk');
+//     //     this.setTint(0xff00);
+//     //     this.setScale(0.55);
+//     //     //  this.setShadow();
+//     // }
 
-    // console.log("left1", left)
+//     // console.log("left1", left)
 
-    // left.on('pointerout', function (event) {
+//     // left.on('pointerout', function (event) {
 
-    //     this.clearTint();
-    //     this.setScale(0.5);
+//     //     this.clearTint();
+//     //     this.setScale(0.5);
 
-    // });
+//     // });
         
-    // right.on('pointerover', function (event) {
+//     // right.on('pointerover', function (event) {
 
-    //     this.setTint(0xff00);
-    //     this.setScale(0.55);
-    //         //  this.setShadow();
-    // });
+//     //     this.setTint(0xff00);
+//     //     this.setScale(0.55);
+//     //         //  this.setShadow();
+//     // });
 
-    // right.on('pointerout', function (event) {
-    //     this.clearTint();
-    //     this.setScale(0.5);
-    // });
+//     // right.on('pointerout', function (event) {
+//     //     this.clearTint();
+//     //     this.setScale(0.5);
+//     // });
 
-    // var dress1 = optionsGroup.getChildren()[0];
-    //     dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
-    //     dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
+//     // var dress1 = optionsGroup.getChildren()[0];
+//     //     dress1.addListener('pointerup', () => onOptionClick(girl2, 'girl1-dress', dress1, dress2, 'bag1', 'bag2'));
+//     //     dress2.addListener('pointerup', () => onOptionClick(girl2, 'girl1-suit', dress1, dress2, 'bag1', 'bag2'));
 
-    //     // Обработка клика по опции выбора элемента
-    //     const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
-    //     console.log('jjjjjjjjjjjjjjjjjjjjj');
+//     //     // Обработка клика по опции выбора элемента
+//     //     const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
+//     //     console.log('jjjjjjjjjjjjjjjjjjjjj');
 
-    //     // скрываем изображение предыдущего персонажа
-    //     prev.setScale(0)
-    //     // prev.disableBody((true, true))
+//     //     // скрываем изображение предыдущего персонажа
+//     //     prev.setScale(0)
+//     //     // prev.disableBody((true, true))
 
-    //     // скрываем изображение предыдущих опций
-    //     prevtOPtion1.setScale(0);
-    //     prevtOPtion2.setScale(0);
+//     //     // скрываем изображение предыдущих опций
+//     //     prevtOPtion1.setScale(0);
+//     //     prevtOPtion2.setScale(0);
 
-    //     //создаем обновленного персонажа
-    //     this.add.image(300, 500, `${next}`);
+//     //     //создаем обновленного персонажа
+//     //     this.add.image(300, 500, `${next}`);
 
-    //     //создаем новый набор опций
-    //     var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
-    //     var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
+//     //     //создаем новый набор опций
+//     //     var optionLeft = this.add.sprite(155, 730, nextOPtion1).setScale(1).setInteractive();
+//     //     var optionRight = this.add.sprite(445, 730, nextOPtion2).setScale(1).setInteractive();
 
-    //     //анимация появления для опций
-    //     // var optionLeftTweens = this.tweens.add({
-    //     //     targets: nextOPtion1,
-    //     //     //  delay: 1000,
-    //     //     duration: 300,
-    //     //     hold: 700,
-    //     //     yoyo: false,
-    //     //     // repeat: 8,
-    //     //     ease: 'Linear',
-    //     //     scaleX: 1,
-    //     //     scaleY: 1,
-    //     //     // onComplete: onCompleteHandler,
-    //     //     // onCompleteParams: [ textBlockBoy1 ]
-    //     //  });
+//     //     //анимация появления для опций
+//     //     // var optionLeftTweens = this.tweens.add({
+//     //     //     targets: nextOPtion1,
+//     //     //     //  delay: 1000,
+//     //     //     duration: 300,
+//     //     //     hold: 700,
+//     //     //     yoyo: false,
+//     //     //     // repeat: 8,
+//     //     //     ease: 'Linear',
+//     //     //     scaleX: 1,
+//     //     //     scaleY: 1,
+//     //     //     // onComplete: onCompleteHandler,
+//     //     //     // onCompleteParams: [ textBlockBoy1 ]
+//     //     //  });
         
        
 
-    //     // this.add.sprite(300, 500, `${nextOPtion1}`);
-    //     // this.add.sprite(300, 500, `${nextOPtion2}`);
+//     //     // this.add.sprite(300, 500, `${nextOPtion1}`);
+//     //     // this.add.sprite(300, 500, `${nextOPtion2}`);
 
-    //     optionLeft.on('pointerover', function (event) {
-    //         this.setTint(0xff00);
-    //         this.setScale(1.05);
-    //     //  this.setShadow();
-    //     });
+//     //     optionLeft.on('pointerover', function (event) {
+//     //         this.setTint(0xff00);
+//     //         this.setScale(1.05);
+//     //     //  this.setShadow();
+//     //     });
 
-    //     optionLeft.on('pointerout', function (event) {
-    //         this.clearTint();
-    //         this.setScale(1);
-    //     });
+//     //     optionLeft.on('pointerout', function (event) {
+//     //         this.clearTint();
+//     //         this.setScale(1);
+//     //     });
         
-    //     optionRight.on('pointerover', function (event) {
-    //         this.setTint(0xff00);
-    //         this.setScale(1.05);
-    //         //  this.setShadow();
-    //     });
+//     //     optionRight.on('pointerover', function (event) {
+//     //         this.setTint(0xff00);
+//     //         this.setScale(1.05);
+//     //         //  this.setShadow();
+//     //     });
 
-    //     optionRight.on('pointerout', function (event) {
-    //         this.clearTint();
-    //         this.setScale(1);
-    //     });
-    // }
-}
+//     //     optionRight.on('pointerout', function (event) {
+//     //         this.clearTint();
+//     //         this.setScale(1);
+//     //     });
+//     // }
+// }
 
         // showOptions()
 
 function addSprites ()
 {
+    var left;
+    var right;
     // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
     //  hand = this.add.sprite(300, 500, 'hand'); 
                // cursor
@@ -505,45 +507,145 @@ function addSprites ()
         
         const option = optionsGroup.getChildren();
         console.log('option', option);
-        //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| create
-        // leftIndex, rightIndef
-        // let nf = showOptions.bind(Phaser)
-        // console.log(nf(option, 0, 1))
-        // // nf(option, 0, 1)
-        // showOptions(option, 0, 1);
+        
+        //callback для события клика
+        // function onClikOption(r) {
+        //         console.log('pointerup', r);
+
+        //         left.visible = false;
+        //         right.visible = false;
+                
+
+        //         left = option[2];
+        //         left.visible = true;
+        //         left.setScale(1);
+        //         console.log("left", left);
+
+        //         right = option[3];
+        //         right.visible = true;
+        //         right.setScale(1);
+
+
+                
+        //         //  this.tweens.add({
+        //         //     targets: left,
+        //         //     duration: 300,
+        //         //     hold: 700,
+        //         //     yoyo: false,
+        //         //     ease: 'Linear',
+        //         //     scaleX: 0.5,
+        //         //     scaleY: 0.5,
+        //         //     // onComplete: onCompleteHandler,
+        //         //     // onCompleteParams: [ textBlockBoy1 ]
+        //         // });
+                    
+        //         // this.tweens.add({
+        //         //     targets: right,
+        //         //     delay: 200,
+        //         //     duration: 300,
+        //         //     hold: 700,
+        //         //     yoyo: false,
+        //         //     ease: 'Linear',
+        //         //     scaleX: 0.5,
+        //         //     scaleY: 0.5,
+        //         //     // onComplete: onCompleteHandler,
+        //         //     // onCompleteParams: [ textBlockBoy1 ]
+        //         // });
+        //     }
+        
         /////////////////////////////////////////////////////////// вынести в отдельную функцию!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        var left = option[0];
-        left.visible = true;
-        console.log("left", left)
+        const showOptions = (option, leftIndex, rightIndef) => {
+            console.log(this)
+            left = option[leftIndex];
+            left.visible = true;
+            console.log("left", left)
+                
+            right = option[rightIndef];
+            right.visible = true;
             
-        var right = option[1];
-        right.visible = true;
+            const tweenLeft = this.tweens.add({
+                targets: left,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });
+                
+            const tweenRight = this.tweens.add({
+                targets: right,
+                delay: 200,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });
+        }
+
+        // показываем набор опций для выбора
+        var leftIndex = 0;
+        var rightIndef = 1;
+        showOptions(option, leftIndex, rightIndef);
         
-        const tweenLeft = this.tweens.add({
-            targets: left,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
-            ease: 'Linear',
-            scaleX: 0.5,
-            scaleY: 0.5,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
-        });
+        //callback для события клика
+        const onClikOption = () => {
+            console.log('pointerup', option.length);
             
-        const tweenRight = this.tweens.add({
-            targets: right,
-            delay: 200,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
-            ease: 'Linear',
-            scaleX: 0.5,
-            scaleY: 0.5,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
-        });
-        
+
+            left.visible = false;
+            right.visible = false;
+            
+            leftIndex += 2;
+            rightIndef += 2;
+
+            if (rightIndef + 2 >= option.length) {
+                console.log('return')
+                return;
+            }
+
+            left = option[leftIndex];
+            console.log("left", left);
+            left.visible = true;
+            left.setScale(1);
+            
+
+            right = option[rightIndef];
+            right.visible = true;
+            right.setScale(1);
+
+            this.tweens.add({
+                targets: left,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });
+                
+            this.tweens.add({
+                targets: right,
+                delay: 200,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });
+        }
+
         // вешаем слушатель событий на каждый элемент группы
         option.forEach(element => {
             // console.log(element);
@@ -553,7 +655,7 @@ function addSprites ()
             element.on('pointerover', function (event) {
                 console.log('pointerover');
                 // this.setTint(0xff00);
-                this.setScale(0.55);
+                this.setScale(1.05);
                 //  this.setShadow();
             });
 
@@ -561,57 +663,13 @@ function addSprites ()
             element.on('pointerout', function (event) {
                 console.log('pointerout');
                 this.clearTint();
-                this.setScale(0.5);
+                this.setScale(1);
             });
 
             // клик
-            element.on('pointerup', function (event) {
-                console.log('pointerup');
-                // this.setTint(0xff00);
-                // this.setScale(0.55);
-                //  this.setShadow();
-
-                left.visible = false;
-                right.visible = false;
-                
-
-                left = option[2];
-                left.visible = true;
-                left.setScale(1);
-                console.log("left", left);
-
-                right = option[3];
-                right.visible = true;
-                right.setScale(1);
-
-
-                
-                //  this.tweens.add({
-                //     targets: left,
-                //     duration: 300,
-                //     hold: 700,
-                //     yoyo: false,
-                //     ease: 'Linear',
-                //     scaleX: 0.5,
-                //     scaleY: 0.5,
-                //     // onComplete: onCompleteHandler,
-                //     // onCompleteParams: [ textBlockBoy1 ]
-                // });
-                    
-                // this.tweens.add({
-                //     targets: right,
-                //     delay: 200,
-                //     duration: 300,
-                //     hold: 700,
-                //     yoyo: false,
-                //     ease: 'Linear',
-                //     scaleX: 0.5,
-                //     scaleY: 0.5,
-                //     // onComplete: onCompleteHandler,
-                //     // onCompleteParams: [ textBlockBoy1 ]
-                // });
-            });
+            element.on('pointerup', () => onClikOption());
         });
+        
 
         // Обработка клика по опции выбора элемента
         const onOptionClick = (prev, next, prevtOPtion1, prevtOPtion2, nextOPtion1, nextOPtion2) => {
