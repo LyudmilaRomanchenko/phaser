@@ -169,10 +169,6 @@ const optionsObjects = [
         leftOption: 'bag1',
         rightOption: 'bag2',
     },
-    // {
-    //     leftOption: 'glasses',
-    //     rightOption: ['necklace1', 'necklace2'],
-    // },
     {
         leftOption: 'glasses',
         rightOption: 'necklace1',
@@ -180,6 +176,10 @@ const optionsObjects = [
     {
         leftOption: 'glasses',
         rightOption: 'necklace2',
+    },
+    {
+        leftOption: 'place1',
+        rightOption: 'place2',
     },
 
 ]
@@ -235,12 +235,11 @@ function preload ()
     this.load.spritesheet('glasses', '../img/glasses.png', { frameWidth: 500, frameHeight: 552 });
     this.load.spritesheet('necklace1', '../img/necklace1.png', { frameWidth: 500, frameHeight: 552 });
     this.load.spritesheet('necklace2', '../img/necklace2.png', { frameWidth: 500, frameHeight: 552 });
-     // this.load.image('girl1-dress', '../img/girl1-dress.png');
-    // this.load.image('girl1-suit', '../img/girl1-suit.png');
-    
-    
+    this.load.spritesheet('place1', '../img/place1.png', { frameWidth: 500, frameHeight: 552 });
+    this.load.spritesheet('place2', '../img/place2.png', { frameWidth: 500, frameHeight: 552 });
+
     //////////
-    // this.load.spritesheet('hand', '../img/hand.png', { frameWidth: 229, frameHeight: 289 });
+    this.load.spritesheet('hand', '../img/hand.png', { frameWidth: 229, frameHeight: 289 });
     
 }
 
@@ -461,6 +460,8 @@ function addSprites ()
     var left;
     var right;
     var selectOption;
+    var destX = 300;
+    var destBoyX = 900;
     // this.input.setDefaultCursor(url('../img/hand.png'), pointer);
     //  hand = this.add.sprite(300, 500, 'hand'); 
                // cursor
@@ -469,7 +470,23 @@ function addSprites ()
     // var sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/input/cursors/pen.cur), pointer' });
         // dress1 = this.add.sprite(155, 730, 'dress1').setScale(0.5).setInteractive({ cursor: url('../img/hand.png'), pointer});
 
-       
+       // курсорпоинтер
+    const pointer = () => {
+        hand = this.add.sprite(150, 300, 'hand');
+        this.tweens.add({
+            targets: hand,
+            delay: 1000,
+            duration: 1700,
+            // hold: 300,
+            yoyo: true,
+            repeat: 8,
+            ease: 'Linear',
+            x: 450,
+            // onComplete: onCompleteHandlerGirl,
+            // onCompleteParams: [ girl1 ]
+        });
+    }
+    pointer();
 
     
     setTimeout(() => {
@@ -500,91 +517,110 @@ function addSprites ()
             y: 31,
             // onComplete: onCompleteHandler,
             // onCompleteParams: [ textBlockBoy1 ]
-        });        
+        });  
+        
 
         // показываем набор опций для выбора
         if (leftIndex === 0) {
             showOptions(option, leftIndex, rightIndef);
+            // pointer();
         }
-            // создаем группу для опций выбора
-    var optionsGroup = this.add.group();
-
-    // заполняем группу элементами
-    optionsObjects.forEach(({leftOption, rightOption}) => {
-        optionsGroup.createMultiple([
-            { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
-            { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
-        ]);
-    }); 
-    const option = optionsGroup.getChildren();
-    console.log('option', option);
-
-    var leftIndex = 0;
-    var rightIndef = 1;
-
-    // вешаем слушатель событий на каждый элемент группы
-    option.forEach(element => {
-        // console.log(element);
-        element.setInteractive();
-
-        //наведение курсора
-        element.on('pointerover', function (event) {
-            this.setScale(1.05);
-            //  this.setShadow();
-        });
-
-        // снятие курсора
-        element.on('pointerout', function (event) {
-            this.clearTint();
-            this.setScale(1);
-        });
-
-        // клик
-        element.on('pointerup', () => onClikOption(element));
-    });
-
-    // функция показа опций выбора
-    const showOptions = (option, leftIndex, rightIndef) => {
-        console.log(this)
-        left = option[leftIndex];
-        // console.log("left", left)
-
-        left.visible = true;
-            
-        right = option[rightIndef];
-        console.log("right", right)
-        console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
-
-        right.visible = true;
         
-        const tweenLeft = this.tweens.add({
-            targets: left,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
+        
+            // создаем группу для опций выбора
+        var optionsGroup = this.add.group();
+
+        // заполняем группу элементами
+        optionsObjects.forEach(({leftOption, rightOption}) => {
+            optionsGroup.createMultiple([
+                { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
+                { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
+            ]);
+        }); 
+        const option = optionsGroup.getChildren();
+        console.log('option', option);
+
+        var leftIndex = 0;
+        var rightIndef = 1;
+
+        // курсорпоинтер
+        hand = this.add.sprite(150, 800, 'hand');
+        this.tweens.add({
+            targets: hand,
+            delay: 1000,
+            duration: 1700,
+            // hold: 300,
+            yoyo: true,
+            repeat: 100,
             ease: 'Linear',
-            scaleX: 1,
-            scaleY: 1,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
+            x: 450,
+            // onComplete: onCompleteHandlerGirl,
+            // onCompleteParams: [ girl1 ]
         });
+
+        // вешаем слушатель событий на каждый элемент группы
+        option.forEach(element => {
+            // console.log(element);
+            element.setInteractive();
+
+            //наведение курсора
+            element.on('pointerover', function (event) {
+                this.setScale(1.05);
+                //  this.setShadow();
+            });
+
+            // снятие курсора
+            element.on('pointerout', function (event) {
+                this.clearTint();
+                this.setScale(1);
+            });
+
+            // клик
+            element.on('pointerup', () => onClikOption(element));
+        });
+
+        // функция показа опций выбора
+        const showOptions = (option, leftIndex, rightIndef) => {
+            console.log(this)
+            left = option[leftIndex];
+            // console.log("left", left)
+
+            left.visible = true;
+                
+            right = option[rightIndef];
+            console.log("right", right)
+            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
+
+            right.visible = true;
             
-        const tweenRight = this.tweens.add({
-            targets: right,
-            delay: 200,
-            duration: 300,
-            hold: 700,
-            yoyo: false,
-            ease: 'Linear',
-            scaleX: 1,
-            scaleY: 1,
-            // onComplete: onCompleteHandler,
-            // onCompleteParams: [ textBlockBoy1 ]
-        });  
-        }
+            const tweenLeft = this.tweens.add({
+                targets: left,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });
+                
+            const tweenRight = this.tweens.add({
+                targets: right,
+                delay: 200,
+                duration: 300,
+                hold: 700,
+                yoyo: false,
+                ease: 'Linear',
+                scaleX: 1,
+                scaleY: 1,
+                // onComplete: onCompleteHandler,
+                // onCompleteParams: [ textBlockBoy1 ]
+            });  
+            }
         
         // функция смены опций выбора
-    const changeOptions = (option, leftIndex, rightIndef) => {
+        const changeOptions = (option, leftIndex, rightIndef) => {
         // console.log(this)
         left = option[leftIndex];
         // console.log("left", left)
@@ -627,6 +663,11 @@ function addSprites ()
         
         //callback для события клика
         const onClikOption = (element) => {
+            hand.setScale(0)
+            setTimeout(() => {
+                console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+                hand.setScale(1)
+            }, 2000)
             console.log('pointerupffffffffffffffffffffffffffffff', element);
 
             selectOption = element.texture.key;
@@ -700,15 +741,6 @@ function addSprites ()
         
         
         // смена персонажа в зависимости от выбраной опции
-        // let filter = [];
-        // let find;
-
-        // var keyObj = '';
-        // var a = 'girl1';
-        // var b;
-        // console.log(b);
-        
-
         const changePerson = (selectOption) => { 
              console.log('seleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeectOption', selectOption);
             if (b) {   
@@ -744,7 +776,22 @@ function addSprites ()
 
         
 
-         showOptions(option, leftIndex, rightIndef);   
+        showOptions(option, leftIndex, rightIndef);   
+        
+        // при наведении РУКИ на опцию
+        // this.physics.add.collider(option, hand, hitBomb);
+
+        
+        // function hitBomb (option, hand)
+        // {
+        //     this.physics.pause();
+
+        //     option.setTint(0xff0000);
+
+        //     // player.anims.play('turn');
+
+        //     // gameOver = true;
+        // }
     }, 2400)
     
     var room = this.add.image(300, 450, 'room');
@@ -756,8 +803,8 @@ function addSprites ()
     textBlockGirl1 = this.add.sprite(300, 450, 'textBlockGirl1').setScale(0);
     textBlockBoy1 = this.add.sprite(300, 450, 'textBlockBoy1').setScale(0);
 
-    var destX = 300;
-    var destBoyX = 900;
+    // var destX = 300;
+    // var destBoyX = 900;
 
     var tweenBoy1 = this.tweens.add({
         targets: boy1,
