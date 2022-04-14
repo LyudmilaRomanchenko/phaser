@@ -49,7 +49,9 @@
     "tsgen": "cd scripts/tsgen && jsdoc -c jsdoc-tsd.conf.json",
     "test-ts": "cd scripts/tsgen/test && tsc --build tsconfig.json > output.txt",
     "ts": "npm run tsgen && npm run test-ts",
-    "tsdev": "npm run build-tsgen && npm run tsgen && npm run test-ts"
+    "tsdev": "npm run build-tsgen && npm run tsgen && npm run test-ts",
+    "predeploy": "npm run build",
+    "deploy": "netlify deploy -p"
   },
   "keywords": [
     "2d",
