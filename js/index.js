@@ -3,6 +3,7 @@ import eventsCenter from './EventsCenter.js';
 // обьявляем переменные 
 var textBlockBoy1;
 var textBlockGirl1;
+var textBlockBoyEnd;
 var boy1;
 var girl1;
 var girl2;
@@ -20,7 +21,7 @@ var destX = 300;
 var destBoyX = 900;
 
 var leftIndex = 0;
-var rightIndef = 1;
+var rightIndex = 1;
 
 var keyObj = '';
 var a = 'girl1';
@@ -170,20 +171,96 @@ class SceneEnd extends Phaser.Scene {
         super('SceneEnd');
     }
 
-    // init(data) {
-    //      console.log('girl222222222222222222222222222222222222222222', data);
-    //     this.girl22 = data.girl22;
-    // }
+     init(data) {
+        console.log('init', data);
+        this.place = data.place;
+        // this.girl = data.girl2; 
+    }
 
     preload ()
     {
         this.load.image('place1-big', '../img/place1-big.png');
-        
+        this.load.image('place2-big', '../img/place2-big.png');
+        this.load.spritesheet('boy1', '../img/boy1.png', { frameWidth: 600, frameHeight: 900 });
+        this.load.spritesheet('textBlockBoyEnd', '../img/textBlock-boy-end.png', { frameWidth: 507, frameHeight: 160 });
+        this.load.spritesheet('boy1', '../img/boy1.png', { frameWidth: 600, frameHeight: 900 });
+
     }
 
     create ()
     {
-        const place1Big = this.add.image(300, 450, 'place1-big');
+        console.log(girl2)
+        let placeBig;
+         if (this.place === 'place1') {
+            // console.log("place111111111111111111111111111");
+            placeBig = this.add.image(300, 450, `${this.place}-big`).setScale(1.8);   
+        }
+
+        if (this.place === 'place2') {
+            // console.log("place222222222222222222222222222222");
+            placeBig = this.add.image(300, 450, `${this.place}-big`).setScale(1.8);
+        }
+
+        this.tweens.add({
+            targets: placeBig,
+            // delay: 200,
+            duration: 300,
+            hold: 700,
+            yoyo: false,
+            ease: 'Linear',
+            scaleX: 1.2,
+            scaleY: 1.2,
+            // onComplete: onCompleteHandler,
+            // onCompleteParams: [ textBlockBoy1 ]
+        });
+
+        boy1 =  this.add.sprite(900, 450, 'boy1');
+        textBlockBoyEnd = this.add.sprite(700, 300, 'textBlockBoyEnd').setScale(0);
+
+        this.tweens.add({
+            targets: boy1,
+            // delay: 1000,
+            duration: 500,
+            // hold: 1000,
+            yoyo: false,
+            ease: 'Linear',
+            x: 430,
+        });
+
+        this.tweens.add({
+            targets: textBlockBoyEnd,
+            // delay: 1000,
+            duration: 500,
+            // hold: 1000,
+            yoyo: false,
+            ease: 'Linear',
+            scaleX: 1,
+            scaleY: 1,
+            x: 300,
+            y: 450,
+        });
+
+        const passGirl = () => {
+            console.log('pppppppppppppppppppppppppppppppppppppppppppppppppppppppppp')
+            // girl2 = this.add.sprite(0, 450, this.girl);
+            
+            // this.tweens.add({
+            //     targets: girl2,
+            //     // delay: 1000,
+            //     duration: 500,
+            //     // hold: 1000,
+            //     yoyo: false,
+            //     ease: 'Linear',
+            //     x: 300,
+            // });
+        }
+        
+        eventsCenter.on('pass-girl', passGirl, this);
+
+        const update = () => {
+            console.log('3333333333333333333333333333333333333333333333333333333333333333333333333333');
+        }
+        eventsCenter.on('update', update, this);
     }
 }
     
@@ -196,7 +273,7 @@ class SceneGame extends Phaser.Scene {
     }
 
     init(data) {
-         console.log('init', data);
+        console.log('init', data.selectOption);
         this.selectOption = data.selectOption;
     }
 
@@ -223,6 +300,9 @@ class SceneGame extends Phaser.Scene {
         this.load.image('girl1-suit-bag2', '../img/girl1-suit-bag2.png');
         this.load.image('girl1-suit-bag2-glasses', '../img/girl1-suit-bag2-glasses.png');
         this.load.image('girl1-suit-bag2-necklace2', '../img/girl1-suit-bag2-necklace2.png');
+
+        
+
     }
 
     create ()
@@ -273,15 +353,29 @@ class SceneGame extends Phaser.Scene {
 
             girl2.setScale(0);
             girl2 = this.add.sprite(300, 500, keyObj).setScale(1);
- 
-	    }
+
+            console.log(girl2);
+            eventsCenter.emit('pass-girl', girl2);
+        }
+        
         
         eventsCenter.on('update-selectOption', updateSelectOption, this);
 
-        this.scene.launch('SceneUI');
+        // передать девушку в финальную сцену ////////////////////////////////////////////////////////
+        // console.log(girl2);
+        // eventsCenter.emit('pass-girl', girl2);
 
+        // this.scene.launch('SceneUI');
+        this.scene.launch('SceneUI', {girl: girl2});
         
-        
+        ///////////////////////////
+        // if (rightIndex >= option.length) {
+        //         console.log('return');
+        //         room.setScale(0)
+        //         room = this.add.image(300, 450, 'place1'); 
+        //         // this.scene.start('SceneEnd', {girl22: girl2});
+                
+        //     } 
     } 
 }
 
@@ -292,11 +386,11 @@ class SceneUI extends Phaser.Scene {
         super('SceneUI');
     }
 
-    // init(data)
-    //     {
-    //       console.log('init', data);
-    //     this.finalScore = data.score;  
-    // }
+    init(data)
+        {
+        console.log('init', data);
+        this.girl = data.girl;  
+    }
 
     preload ()
     {
@@ -313,6 +407,9 @@ class SceneUI extends Phaser.Scene {
 
         // загрузка руки-указателя
         this.load.spritesheet('hand', '../img/hand.png', { frameWidth: 229, frameHeight: 289 });
+
+        //////////////////////////
+        this.load.image('place1-big', '../img/place1-big.png');
     }
 
     create ()
@@ -354,7 +451,7 @@ class SceneUI extends Phaser.Scene {
 
         //callback для события клика
         const onClikOption = (element) => {
-            this.scene.run('SceneEnd');
+            // this.scene.run('SceneEnd');
 
             // this.scene.launch('SceneGame', {selectOption: selectOption});
 
@@ -362,31 +459,27 @@ class SceneUI extends Phaser.Scene {
             setTimeout(() => {
                 console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
                 hand.setScale(1)
-            }, 2000)
-            console.log('pointerupffffffffffffffffffffffffffffff', element);
+            }, 2000);
 
             selectOption = element.texture.key;
-            console.log("selectOption", selectOption);
+            // console.log("selectOption", selectOption);
 
-            // if (selectOption === 'place1' || 'place2') {
-            //     console.log("777777777777777777777777777777777777777")
-            //     this.scene.start('SceneEnd', {girl22: girl2});
-                
-            // }
+            eventsCenter.emit('update-selectOption', selectOption);
+            // eventsCenter.emit('update', girl2);
+            
+            console.log(girl2);
+            
 
-            // if (rightIndef >= option.length) {
+            // if (rightIndex >= option.length) {
             //     console.log('return');
             //     // eventsCenter.destroy();
-            // eventsCenter.emit('update-selectOption', selectOption);
-
-            
+            // eventsCenter.emit('update-place', selectOption);
             //     return;
             // } 
 
-            eventsCenter.emit('update-selectOption', selectOption);
             
             // показываем следующий набор опций для выбора
-            // changeOptions(option, leftIndex, rightIndef);
+            // changeOptions(option, leftIndex, rightIndex);
 
             // показываем следующий набор опций для выбора
             ///////////////////////////////////////////////////////////////////////// вынести в отдельную функцию
@@ -397,14 +490,14 @@ class SceneUI extends Phaser.Scene {
              if (b && b.includes('suit-bag') && (b.includes('glasses') || b.includes('necklace2'))) {
                 console.log("777777777777777777777777777777777777777")
                 leftIndex += 2;
-                rightIndef += 2;
-                console.log(leftIndex, rightIndef);
+                rightIndex += 2;
+                console.log(leftIndex, rightIndex);
             }
             else if (b && b.includes('suit-bag') || ( b.includes('dress-bag') && b.includes('glasses') || b.includes('necklace1'))) {
                 console.log("777777777777777777777777777777777777777")
                 leftIndex += 4;
-                rightIndef += 4;
-                console.log(leftIndex, rightIndef);
+                rightIndex += 4;
+                console.log(leftIndex, rightIndex);
             }
             // else if (b && b.includes('place')) {
             //      console.log("5555555555555555555555555555555555555555555555555555");
@@ -415,46 +508,35 @@ class SceneUI extends Phaser.Scene {
             // }
              else {
                 leftIndex += 2;
-                rightIndef += 2;
+                rightIndex += 2;
             }
 
-            if (b && b.includes('place')) {
-                 console.log("5555555555555555555555555555555555555555555555555555");
-                // this.scene.start('SceneEnd', {girl22: girl2}); 
-                this.scene.stop('SceneUI');  
-                // this.scene.transition({target: 'SceneEnd'});  
+            // if (b && b.includes('place')) {
+            //      console.log("5555555555555555555555555555555555555555555555555555");
+            //     // this.scene.start('SceneEnd', {girl22: girl2}); 
+            //     this.scene.stop('SceneUI'); 
+            //     this.scene.stop('SceneGame'); 
 
-            }
-
-            //  if (b && b.includes('suit-bag') && (b.includes('glasses') || b.includes('necklace2'))) {
-            //     console.log("777777777777777777777777777777777777777")
-            //     leftIndex += 4;
-            //     rightIndef += 4;
-            // } else {
-            //     leftIndex += 2;
-            //     rightIndef += 2;
+            //     // this.scene.start('SceneEnd', {place: selectOption})
             // }
 
-            // if (b && b.includes('suit-bag') || (b && b.includes('dress-bag') && b.includes('glasses') || b.includes('necklace'))) {
-            //     console.log("777777777777777777777777777777777777777")
-            //     leftIndex += 4;
-            //     rightIndef += 4;
-            // } else {
-            //     leftIndex += 2;
-            //     rightIndef += 2;
-            // }
+            // if (rightIndex + 2 >= option.length) {
+            if (rightIndex >= option.length) {
+                console.log(selectOption)
+                // eventsCenter.emit('update-place', selectOption);
+        eventsCenter.emit('pass-girl', girl2);
 
-            
-            // leftIndex += 2;
-            // rightIndef += 2;
-
-            // if (rightIndef + 2 >= option.length) {
-            if (rightIndef >= option.length) {
-                console.log('return');
                 this.scene.stop('SceneUI'); 
                 this.scene.stop('SceneGame'); 
-                this.scene.start('SceneEnd'); 
+                this.scene.start('SceneEnd', {
+                    place: selectOption,
+                    // girl: this.girl,
+                }); 
+
+            eventsCenter.emit('update', girl2);
+
                 // this.scene.start('SceneEnd', {girl22: girl2});
+                hand.setScale(0);;
                 
                 return;
             } else {
@@ -464,7 +546,7 @@ class SceneUI extends Phaser.Scene {
                 left.visible = true;
                 // left.setScale(0);
                 
-                right = option[rightIndef];
+                right = option[rightIndex];
                 right.visible = true;
                 // right.setScale(0);
                 // selectOption = left.texture.key;
@@ -496,18 +578,27 @@ class SceneUI extends Phaser.Scene {
             }
             ///////////////////////////////////////////////////////////////////////// вынести в отдельную функцию
 
-            // showOptions(option, leftIndex, rightIndef);
+            // showOptions(option, leftIndex, rightIndex);
         }
+        //  if (selectOption === 'place1' || 'place2') {
+        //         console.log("777777777777777777777777777777777777777")
+        //         // this.scene.start('SceneEnd', {girl22: girl2});
+        //         // eventsCenter.emit('update-selectOption', '');
+                
+        //     } else {
+        //         eventsCenter.emit('update-selectOption', selectOption);
+
+        //     }
 
         // функция показа опций выбора
-        const showOptions = (option, leftIndex, rightIndef) => {
+        const showOptions = (option, leftIndex, rightIndex) => {
             console.log(this)
             left = option[leftIndex];
             // console.log("left", left)
 
             left.visible = true;
                 
-            right = option[rightIndef];
+            right = option[rightIndex];
             console.log("right", right)
             console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
 
@@ -539,70 +630,9 @@ class SceneUI extends Phaser.Scene {
             });  
         }
         
-        // функция смены опций выбора
-        const changeOptions = (option, leftIndex, rightIndef) => {
-            left.visible = false;
-            right.visible = false;
-
-            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
-            if (b && b.includes('suit-bag') || (b && b.includes('dress-bag') && b.includes('glasses') || b.includes('necklace'))) {
-                console.log("777777777777777777777777777777777777777")
-                leftIndex += 4;
-                rightIndef += 4;
-            } else {
-                leftIndex += 2;
-                rightIndef += 2;
-            }
-            
-            // leftIndex += 2;
-            // rightIndef += 2;
-
-            // if (rightIndef + 2 >= option.length) {
-            if (rightIndef >= option.length) {
-                console.log('return');
-                return;
-            } else {
-                // вызываем следующую группу
-                left = option[leftIndex];
-                // console.log("left", left.texture.key);
-                left.visible = true;
-                // left.setScale(0);
-                
-                right = option[rightIndef];
-                right.visible = true;
-                // right.setScale(0);
-                // selectOption = left.texture.key;
-
-                this.tweens.add({
-                    targets: left,
-                    duration: 300,
-                    hold: 700,
-                    yoyo: false,
-                    ease: 'Linear',
-                    scaleX: 1,
-                    scaleY: 1,
-                    // onComplete: onCompleteHandler,
-                    // onCompleteParams: [ textBlockBoy1 ]
-                });
-                    
-                this.tweens.add({
-                    targets: right,
-                    delay: 200,
-                    duration: 300,
-                    hold: 700,
-                    yoyo: false,
-                    ease: 'Linear',
-                    scaleX: 1,
-                    scaleY: 1,
-                    // onComplete: onCompleteHandler,
-                    // onCompleteParams: [ textBlockBoy1 ]
-                });
-            }
-        }
-        // showOptions(option, leftIndex, rightIndef); 
         // показываем набор опций для выбора
         if (leftIndex === 0) {
-            showOptions(option, leftIndex, rightIndef);
+            showOptions(option, leftIndex, rightIndex);
             // pointer();
         }
         
@@ -646,6 +676,74 @@ class SceneUI extends Phaser.Scene {
 }
 
 
+
+
+
+
+
+
+function onCompleteHandler1 (targets, delay, duration,  hold)
+{
+
+    this.tweens.add({
+         targets: targets,
+         delay: delay,
+         duration: duration,
+        hold: hold,
+        yoyo: false,
+        // repeat: 8,
+        ease: 'Linear',
+        scaleX: 0,
+         scaleY: 0,
+        onComplete: onCompleteHandler,
+        onCompleteParams: [ targets ]
+     });
+
+    // myImage.setScale(0);
+}
+
+function onCompleteHandler (tween, targets, myImage)
+{
+
+
+    myImage.setScale(0);
+}
+
+
+// const onCompleteHandlerGirl = (tween, targets, myImage) =>
+// {
+
+//     myImage.setScale(0);
+//     // console.log(targets)
+//     this.tweens.add({
+//          targets: myImage,
+//         //  delay: delay,
+//          duration: 500,
+//         // hold: hold,
+//         yoyo: false,
+//         // repeat: 8,
+//         ease: 'Linear',
+//         scaleX: 0,
+//          scaleY: 0,
+//         // onComplete: onCompleteHandler,
+//         // onCompleteParams: [ targets ]
+//      });
+// }
+
+var config = {
+    type: Phaser.AUTO,
+    width: 600,
+    height: 900,
+    backgroundColor: '#fff3d5',
+    scene: [ SceneIntro, SceneGame, SceneUI, SceneEnd ],
+    // scene: {
+    //     preload: preload,
+    //     create: create,
+    //     // update: update
+    // }
+};
+
+var game = new Phaser.Game(config);
 
 
 
@@ -856,72 +954,6 @@ class SceneUI extends Phaser.Scene {
 //         onCompleteParams: [ targets ]
 //      });
 // }
-
-
-function onCompleteHandler1 (targets, delay, duration,  hold)
-{
-
-    this.tweens.add({
-         targets: targets,
-         delay: delay,
-         duration: duration,
-        hold: hold,
-        yoyo: false,
-        // repeat: 8,
-        ease: 'Linear',
-        scaleX: 0,
-         scaleY: 0,
-        onComplete: onCompleteHandler,
-        onCompleteParams: [ targets ]
-     });
-
-    // myImage.setScale(0);
-}
-
-function onCompleteHandler (tween, targets, myImage)
-{
-
-
-    myImage.setScale(0);
-}
-
-
-// const onCompleteHandlerGirl = (tween, targets, myImage) =>
-// {
-
-//     myImage.setScale(0);
-//     // console.log(targets)
-//     this.tweens.add({
-//          targets: myImage,
-//         //  delay: delay,
-//          duration: 500,
-//         // hold: hold,
-//         yoyo: false,
-//         // repeat: 8,
-//         ease: 'Linear',
-//         scaleX: 0,
-//          scaleY: 0,
-//         // onComplete: onCompleteHandler,
-//         // onCompleteParams: [ targets ]
-//      });
-// }
-
-var config = {
-    type: Phaser.AUTO,
-    width: 600,
-    height: 900,
-    backgroundColor: '#fff3d5',
-    scene: [ SceneIntro, SceneGame, SceneUI ],
-    // scene: {
-    //     preload: preload,
-    //     create: create,
-    //     // update: update
-    // }
-};
-
-var game = new Phaser.Game(config);
-
-
 // // функция добавления опций
 // function addOptions() {
 //     // создаем группу для опций выбора
@@ -1369,17 +1401,17 @@ var game = new Phaser.Game(config);
             // if (b && b.includes('suit-bag')) {
             //     console.log("777777777777777777777777777777777777777")
             //     leftIndex += 4;
-            //     rightIndef += 4;
+            //     rightIndex += 4;
             // } else {
             //     leftIndex += 2;
-            //     rightIndef += 2;
+            //     rightIndex += 2;
             // }
             
             // // leftIndex += 2;
-            // // rightIndef += 2;
+            // // rightIndex += 2;
 
-            // // if (rightIndef + 2 >= option.length) {
-            // if (rightIndef >= option.length) {
+            // // if (rightIndex + 2 >= option.length) {
+            // if (rightIndex >= option.length) {
             //     console.log('return');
             //     return;
             // } else {
@@ -1389,7 +1421,7 @@ var game = new Phaser.Game(config);
             //     left.visible = true;
             //     // left.setScale(0);
                 
-            //     right = option[rightIndef];
+            //     right = option[rightIndex];
             //     right.visible = true;
             //     // right.setScale(0);
             //     // selectOption = left.texture.key;
@@ -1606,7 +1638,7 @@ var game = new Phaser.Game(config);
 
         //     // показываем набор опций для выбора
         //     if (leftIndex === 0) {
-        //         showOptions(option, leftIndex, rightIndef);
+        //         showOptions(option, leftIndex, rightIndex);
         //         // pointer();
         //     }
             
@@ -1625,7 +1657,7 @@ var game = new Phaser.Game(config);
         //     console.log('option', option);
 
         //     var leftIndex = 0;
-        //     var rightIndef = 1;
+        //     var rightIndex = 1;
 
         //     // курсорпоинтер
         //     hand = this.add.sprite(150, 800, 'hand');
@@ -1664,14 +1696,14 @@ var game = new Phaser.Game(config);
         //     });
 
         //     // функция показа опций выбора
-        //     const showOptions = (option, leftIndex, rightIndef) => {
+        //     const showOptions = (option, leftIndex, rightIndex) => {
         //         console.log(this)
         //         left = option[leftIndex];
         //         // console.log("left", left)
 
         //         left.visible = true;
                     
-        //         right = option[rightIndef];
+        //         right = option[rightIndex];
         //         console.log("right", right)
         //         console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
 
@@ -1704,13 +1736,13 @@ var game = new Phaser.Game(config);
         //         }
             
         //     // функция смены опций выбора
-        //     const changeOptions = (option, leftIndex, rightIndef) => {
+        //     const changeOptions = (option, leftIndex, rightIndex) => {
         //     // console.log(this)
         //     left = option[leftIndex];
         //     // console.log("left", left)
         //     left.visible = true;
                 
-        //     right = option[rightIndef];
+        //     right = option[rightIndex];
         //     console.log("right", right)
         //     // console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", b)
         //     right.visible = true;
@@ -1742,7 +1774,7 @@ var game = new Phaser.Game(config);
         // }
 
         
-        //     // showOptions(option, leftIndex, rightIndef);
+        //     // showOptions(option, leftIndex, rightIndex);
 
             
         //     //callback для события клика
@@ -1758,7 +1790,7 @@ var game = new Phaser.Game(config);
         //         console.log("selectOption", selectOption);
         //         // вызываем следующего персонажа - меняем одежду, добавляем аксесуары
         //         changePerson(selectOption);
-        //         // showOptions(option, leftIndex, rightIndef);
+        //         // showOptions(option, leftIndex, rightIndex);
 
         //         // показываем следующий набор опций для выбора
                 
@@ -1769,17 +1801,17 @@ var game = new Phaser.Game(config);
         //         if (b && b.includes('suit-bag') || (b && b.includes('dress-bag') && b.includes('glasses') || b.includes('necklace'))) {
         //             console.log("777777777777777777777777777777777777777")
         //             leftIndex += 4;
-        //             rightIndef += 4;
+        //             rightIndex += 4;
         //         } else {
         //             leftIndex += 2;
-        //             rightIndef += 2;
+        //             rightIndex += 2;
         //         }
                 
         //         // leftIndex += 2;
-        //         // rightIndef += 2;
+        //         // rightIndex += 2;
 
-        //         // if (rightIndef + 2 >= option.length) {
-        //         if (rightIndef >= option.length) {
+        //         // if (rightIndex + 2 >= option.length) {
+        //         if (rightIndex >= option.length) {
         //             console.log('return');
         //             return;
         //         } else {
@@ -1789,7 +1821,7 @@ var game = new Phaser.Game(config);
         //             left.visible = true;
         //             // left.setScale(0);
                     
-        //             right = option[rightIndef];
+        //             right = option[rightIndex];
         //             right.visible = true;
         //             // right.setScale(0);
         //             // selectOption = left.texture.key;
@@ -1819,7 +1851,7 @@ var game = new Phaser.Game(config);
         //                 // onCompleteParams: [ textBlockBoy1 ]
         //             });
         //         }
-        //         showOptions(option, leftIndex, rightIndef);
+        //         showOptions(option, leftIndex, rightIndex);
         //     }
 
             
@@ -1854,13 +1886,13 @@ var game = new Phaser.Game(config);
         //             // });
                 
                 
-        //         showOptions(option, leftIndex, rightIndef);
+        //         showOptions(option, leftIndex, rightIndex);
         //     }
 
 
             
 
-        //     showOptions(option, leftIndex, rightIndef);   
+        //     showOptions(option, leftIndex, rightIndex);   
             
         //     // при наведении РУКИ на опцию
         //     // this.physics.add.collider(option, hand, hitBomb);
