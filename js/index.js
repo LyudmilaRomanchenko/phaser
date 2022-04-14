@@ -1,36 +1,31 @@
 import eventsCenter from './EventsCenter.js';
 
+
 // обьявляем переменные 
-var textBlockBoy1;
-var textBlockGirl1;
-var textBlockBoyEnd;
-var boy1;
-var girl1;
-var girl2;
-var titleBlock;
-var room;
-var optionsGroup;
-var option;
-var playNow;
-// var dress1;
-// var dress2;
-var hand;
-// var optionsGroup;
-// var person = 'girl1';
-var left;
-var right;
-var selectOption;
-var destX = 300;
-var destBoyX = 900;
+let textBlockBoy1;
+let textBlockGirl1;
+let textBlockBoyEnd;
+let boy1;
+let girl1;
+let girl2;
+let titleBlock;
+let room;
+let optionsGroup;
+let option;
+let playNow;
+let hand;
+let left;
+let right;
+let selectOption;
+let destX = 300;
+let destBoyX = 900;
 
-var leftIndex = 0;
-var rightIndex = 1;
+let leftIndex = 0;
+let rightIndex = 1;
 
-var keyObj = '';
-var a = 'girl1';
-var b;
-console.log(b);
-
+let keyObj = '';
+let a = 'girl1';
+let b;
 
 const optionsObjects = [
     {
@@ -66,7 +61,6 @@ class SceneIntro extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('overlay', '../img/overlay.png');
         this.load.image('room', '../img/room.png');
         this.load.image('clickHereButton', '../img/clickHereButton.png');
         this.load.spritesheet('girl1', '../img/girl1.png', { frameWidth: 600, frameHeight: 900 });
@@ -119,7 +113,6 @@ function addIntro() {
 
     const tweenTextBlockBoy1 = this.tweens.add({
         targets: textBlockBoy1,
-        //  delay: 1000,
         duration: 300,
         hold: 700,
         yoyo: false,
@@ -150,8 +143,6 @@ function addIntro() {
                 return value + 30;
             }
         },
-        // onComplete: onCompleteHandlerGirl,
-        // onCompleteParams: [ girl1 ]
     });
 
     const tweenTextBlockGirl1 = this.tweens.add({
@@ -167,96 +158,6 @@ function addIntro() {
         onCompleteParams: [ textBlockGirl1 ]
     });
 }
-
-// создаем финальную сцену
-// class SceneEnd extends Phaser.Scene {
-//     constructor ()
-//     {
-//         super('SceneEnd');
-//     }
-
-//      init(data) {
-//         console.log('init', data);
-//         this.place = data.place;
-//         this.girl = data.girl2; 
-//     }
-
-//     preload ()
-//     {
-//         this.load.image('place1-big', '../img/place1-big.png');
-//         this.load.image('place2-big', '../img/place2-big.png');
-//         this.load.spritesheet('boy1', '../img/boy1.png', { frameWidth: 600, frameHeight: 900 });
-//         this.load.spritesheet('textBlockBoyEnd', '../img/textBlock-boy-end.png', { frameWidth: 507, frameHeight: 160 });
-
-//     }
-
-//     create ()
-//     {
-//         let placeBig;
-//          if (this.place === 'place1') {
-//             placeBig = this.add.image(300, 450, `${this.place}-big`).setScale(1.8);   
-//         }
-
-//         if (this.place === 'place2') {
-//             placeBig = this.add.image(300, 450, `${this.place}-big`).setScale(1.8);
-//         }
-
-//         this.tweens.add({
-//             targets: placeBig,
-//             // delay: 200,
-//             duration: 300,
-//             hold: 700,
-//             yoyo: false,
-//             ease: 'Linear',
-//             scaleX: 1.2,
-//             scaleY: 1.2,
-//             // onComplete: onCompleteHandler,
-//             // onCompleteParams: [ textBlockBoy1 ]
-//         });
-
-//         boy1 =  this.add.sprite(900, 450, 'boy1');
-//         textBlockBoyEnd = this.add.sprite(700, 300, 'textBlockBoyEnd').setScale(0);
-
-//         this.tweens.add({
-//             targets: boy1,
-//             // delay: 1000,
-//             duration: 500,
-//             // hold: 1000,
-//             yoyo: false,
-//             ease: 'Linear',
-//             x: 430,
-//         });
-
-//         this.tweens.add({
-//             targets: textBlockBoyEnd,
-//             // delay: 1000,
-//             duration: 500,
-//             // hold: 1000,
-//             yoyo: false,
-//             ease: 'Linear',
-//             scaleX: 1,
-//             scaleY: 1,
-//             x: 300,
-//             y: 450,
-//         });
-
-//         const update = () => {
-//             console.log('3333333333333333333333333333333333333333333333333333333333333333333333333333');
-//             // girl2 = this.add.sprite(0, 450, this.girl);
-            
-//             // this.tweens.add({
-//             //     targets: girl2,
-//             //     // delay: 1000,
-//             //     duration: 500,
-//             //     // hold: 1000,
-//             //     yoyo: false,
-//             //     ease: 'Linear',
-//             //     x: 300,
-//             // });
-//         }
-//         eventsCenter.on('update', update, this);
-//     }
-// }
     
 // создаем сцену игры
 class SceneGame extends Phaser.Scene {
@@ -336,13 +237,7 @@ class SceneGame extends Phaser.Scene {
         });  
 
         const updateSelectOption = () => {
-		    console.log('seleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeectOption', selectOption);
-           
-            console.log("selectOption", selectOption);
-            console.log("b", b);
-
             if (selectOption === 'place1' || selectOption === 'place2') {
-                console.log(girl2);
                 if (selectOption === 'place1') {
                     room.setScale(0);
                     room = this.add.image(300, 450, `${selectOption}-big`).setScale(1.8);
@@ -398,8 +293,6 @@ class SceneGame extends Phaser.Scene {
                     scaleY: 1,
                     x: 300,
                     y: 450,
-                    // onComplete: onCompleteHandlerTextEnd,
-                    // onCompleteParams: [ textBlockBoyEnd ]
                 });
 
                 this.tweens.add({
@@ -413,15 +306,9 @@ class SceneGame extends Phaser.Scene {
                     scaleY: 0,
                     x: 300,
                     y: 450,
-                    // onComplete: onCompleteHandlerTextEnd,
                     onComplete: onCompleteHandler,
-
                     onCompleteParams: [textBlockBoyEnd]
                 });
-
-                // function onCompleteHandlerTextEnd(tween, targets, myImage) {
-                //     myImage.setScale(0);
-                // }
 
                 playNow = this.add.sprite(300, 950, 'play-now').setInteractive();
                 this.tweens.add({
@@ -433,23 +320,16 @@ class SceneGame extends Phaser.Scene {
                     ease: 'Linear',
                     y: 800,
                 });
+                
+                playNow.once('pointerup', openExternalLink, this);
 
-                playNow.once('pointerup', restart, this);
+                // playNow.once('pointerup', restart, this);
             }
             else {
-                // if (b) {   
-                //     keyObj = b.concat(`-${selectOption}`);
-                //     // b = keyObj;
-                // } else {
-                //     keyObj = a.concat(`-${selectOption}`);
-                //     // b = keyObj;
-                // }
-
                 b ? keyObj = b.concat(`-${selectOption}`) : keyObj = a.concat(`-${selectOption}`);
-
                 b = keyObj;
+
                 girl2.setScale(0);
-                console.log("keyObj", keyObj)
                 girl2 = this.add.sprite(300, 500, keyObj).setScale(1);
             }
         }
@@ -457,30 +337,24 @@ class SceneGame extends Phaser.Scene {
         eventsCenter.on('update-selectOption', updateSelectOption, this);
 
         this.scene.launch('SceneUI');
-        
-        function restart() {
-            // addIntro();
-            optionsGroup = 0;
-            option = 0;
-            left = 0;
-            right = 0;
-            selectOption = 0;
 
-            leftIndex = 0;
-            rightIndex = 1;
+        function openExternalLink ()
+        {
+            var url = 'https://apps.apple.com/us/app/id1491717191';
 
-            keyObj = '';
-            // a = 'girl1';
-            b = 0;
-            this.scene.start('SceneIntro'); 
-            // this.scene.wake('SceneUI'); 
-            eventsCenter.off('update-selectOption', updateSelectOption, this);
+            var s = window.open(url, '_blank');
+
+            if (s && s.focus)
+            {
+                s.focus();
+            }
+            else if (!s)
+            {
+                window.location.href = url;
+            }
         }
-        
     } 
 }
-
-
 
 // создаем сцену UI
 class SceneUI extends Phaser.Scene {
@@ -504,15 +378,12 @@ class SceneUI extends Phaser.Scene {
 
         // загрузка руки-указателя
         this.load.spritesheet('hand', '../img/hand.png', { frameWidth: 229, frameHeight: 289 });
-
-        //////////////////////////
-        this.load.image('place1-big', '../img/place1-big.png');
     }
 
     create ()
     {
         // создаем группу для опций выбора
-        const optionsGroup = this.add.group();
+        optionsGroup = this.add.group();
 
         // заполняем группу элементами
         optionsObjects.forEach(({leftOption, rightOption}) => {
@@ -544,26 +415,29 @@ class SceneUI extends Phaser.Scene {
 
         //callback для события клика
         const onClikOption = (element) => {
-             console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
-            // this.scene.run('SceneEnd');
-
-            // this.scene.launch('SceneGame', {selectOption: selectOption});
-
             hand.setScale(0)
             setTimeout(() => {
-                hand.setScale(1)
+                hand.setScale(1);
+                hand.setX(300);
+                hand.setY(1000);
+                this.tweens.add({
+                    targets: hand,
+                    // delay: 1000,
+                    duration: 500,
+                    // hold: 300,
+                    // yoyo: true,
+                    // repeat: 100,
+                    ease: 'Linear',
+                    x: 150,
+                    y: 800,
+                });
             }, 2000);
 
             selectOption = element.texture.key;
-            // console.log("selectOption", selectOption);
 
             eventsCenter.emit('update-selectOption', selectOption);
-        
-            // показываем следующий набор опций для выбора
-            // changeOptions(option, leftIndex, rightIndex);
 
             // показываем следующий набор опций для выбора
-            ///////////////////////////////////////////////////////////////////////// вынести в отдельную функцию
             left.visible = false;
             right.visible = false;
 
@@ -583,14 +457,6 @@ class SceneUI extends Phaser.Scene {
             if (rightIndex >= option.length) {
 
                 this.scene.stop('SceneUI');
-                // this.scene.sleep('SceneUI'); 
-
-                // this.scene.stop('SceneGame'); 
-                // this.scene.start('SceneEnd', {
-                //     place: selectOption,
-                //     girl: this.girl,
-                // }); 
-
                 hand.setScale(0);;
                 return;
             } else {
@@ -622,8 +488,6 @@ class SceneUI extends Phaser.Scene {
                     scaleY: 1,
                 });
             }
-            ///////////////////////////////////////////////////////////////////////// вынести в отдельную функцию
-
         }
 
         // функция показа опций выбора
@@ -659,14 +523,25 @@ class SceneUI extends Phaser.Scene {
         // показываем набор опций для выбора
         if (leftIndex === 0) {
             showOptions(option, leftIndex, rightIndex);
-            // pointer();
         }
         
         // курсорпоинтер
-        hand = this.add.sprite(150, 800, 'hand');
+        hand = this.add.sprite(300, 1000, 'hand');
         this.tweens.add({
             targets: hand,
             delay: 1000,
+            duration: 700,
+            // hold: 300,
+            // yoyo: true,
+            // repeat: 100,
+            ease: 'Linear',
+            x: 150,
+            y: 800,
+        });
+
+        this.tweens.add({
+            targets: hand,
+            delay: 1700,
             duration: 1700,
             // hold: 300,
             yoyo: true,
@@ -674,21 +549,6 @@ class SceneUI extends Phaser.Scene {
             ease: 'Linear',
             x: 450,
         });
-        
-        // при наведении РУКИ на опцию
-        // this.physics.add.collider(option, hand, hitBomb);
-
-        
-        // function hitBomb (option, hand)
-        // {
-        //     this.physics.pause();
-
-        //     option.setTint(0xff0000);
-
-        //     // player.anims.play('turn');
-
-        //     // gameOver = true;
-        // }
     }
 }
 
@@ -703,14 +563,41 @@ var config = {
     height: 900,
     backgroundColor: '#fff3d5',
     scene: [SceneIntro, SceneGame, SceneUI],
-    // scene: [ SceneIntro, SceneGame, SceneUI, SceneEnd ],
-    
-    // scene: {
-    //     preload: preload,
-    //     create: create,
-    //     // update: update
-    // }
 };
 
 var game = new Phaser.Game(config);
 
+//////////////////////
+//  function restart() {
+//             // addIntro();
+//             optionsGroup = 0;
+//             option = 0;
+//             left = 0;
+//             right = 0;
+//             selectOption = 0;
+
+//             leftIndex = 0;
+//             rightIndex = 1;
+
+//             keyObj = '';
+//             // a = 'girl1';
+//             b = 0;
+//             this.scene.start('SceneIntro');
+//             // this.scene.wake('SceneUI');
+//             eventsCenter.off('update-selectOption', updateSelectOption, this);
+//         }
+
+// при наведении РУКИ на опцию
+        // this.physics.add.collider(option, hand, hitBomb);
+
+        
+        // function hitBomb (option, hand)
+        // {
+        //     this.physics.pause();
+
+        //     option.setTint(0xff0000);
+
+        //     // player.anims.play('turn');
+
+        //     // gameOver = true;
+        // }
