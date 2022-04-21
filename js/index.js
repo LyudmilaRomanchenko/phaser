@@ -562,6 +562,20 @@ var config = {
     width: 600,
     height: 900,
     backgroundColor: '#fff3d5',
+    scale: {
+        // mode: Phaser.Scale.RESIZE,
+        // parent: 'phaser-example',
+        // width: 600,
+        // height: 900,
+        // min: {
+        //     width: 320,
+        //     height: 480
+        // },
+        // max: {
+        //     width: 1400,
+        //     height: 1200
+        // }
+    },
     scene: [SceneIntro, SceneGame, SceneUI],
 };
 
