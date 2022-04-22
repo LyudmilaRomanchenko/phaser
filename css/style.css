@@ -1,0 +1,32 @@
+
+
+@media screen and (max-width: 480px) {
+
+    #phaser-example {
+        background-color: aquamarine;
+    width: 100vw;
+    height: 100vh;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+    #phaser-example {
+            background-color: aquamarine;
+        width: 450px;
+        height: 609px;
+    }
+}
+
+@media screen and (min-width: 900) {
+    #phaser-example {
+        background-color: aquamarine;
+        width: 528px;
+        height: 581px;
+    }
+}
+
+/* #phaser-example {
+    background-color: aquamarine;
+    width: 100vw;
+    height: 100vh;
+} */

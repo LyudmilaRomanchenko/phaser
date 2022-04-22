@@ -2,6 +2,7 @@ import eventsCenter from './EventsCenter.js';
 
 
 // обьявляем переменные 
+let clickHereButton;
 let textBlockBoy1;
 let textBlockGirl1;
 let textBlockBoyEnd;
@@ -10,6 +11,7 @@ let girl1;
 let girl2;
 let titleBlock;
 let room;
+let room1;
 let optionsGroup;
 let option;
 let playNow;
@@ -51,20 +53,6 @@ const optionsObjects = [
 
 ]
 
-// var config = {
-//     type: Phaser.AUTO,
-//     width: 600,
-//     height: 900,
-//     backgroundColor: '#fff3d5',
-//     scene: [SceneIntro, SceneGame, SceneUI],
-// };
-
-
-
-// var game = new Phaser.Game(config);
-
-// console.log(game.scale)
-
 // создаем сцену интро
 class SceneIntro extends Phaser.Scene {
 
@@ -75,11 +63,6 @@ class SceneIntro extends Phaser.Scene {
 
     preload ()
     {
-        // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    // game.scale.pageAlignHorizontally = true;
-    // game.scale.pageAlignVertically = true;
-    //     game.stage.backgroundColor = '#eee';
-        
         this.load.image('room', '../img/room.png');
         this.load.image('clickHereButton', '../img/clickHereButton.png');
         this.load.spritesheet('girl1', '../img/girl1.png', { frameWidth: 600, frameHeight: 900 });
@@ -91,9 +74,40 @@ class SceneIntro extends Phaser.Scene {
 
     create ()
     {
-        const clickHereButton = this.add.image(300, 450, 'clickHereButton').setScale(0.5).setInteractive();
+        // const clickHereButton = this.add.image(300, 450, 'clickHereButton').setScale(0.5).setInteractive();
+        clickHereButton  = this.add.image(this.scale.width / 2, this.scale.height / 2, 'clickHereButton').setScale(0.5).setInteractive();
         clickHereButton.once('pointerup', addIntro, this);
+
+        this.scale.on('resize', resize, this);
     }
+}
+
+function resize (gameSize, baseSize, displaySize, resolution)
+{
+    var width = gameSize.width;
+    var height = gameSize.height;
+
+    this.cameras.resize(width, height);
+
+    // this.bg.setSize(width, height);
+    clickHereButton.setPosition(width / 2, height / 2);
+    room.setSize(width, height);
+    room.setPosition(width / 2, height / 2);
+    room1.setSize(width, height);
+    room1.setPosition(width / 2, height / 2);
+    boy1.setPosition(width / 2, height * 2);
+    girl1.setPosition(width / 2, height / 2);
+    girl2.setPosition(width / 2, (this.scale.height / 2)*1.032);
+    // girl2.setPosition(width / 2, this.scale.height / 2);
+
+    textBlockGirl1.setPosition(width / 2, height / 2);
+    textBlockBoy1.setPosition(width / 2, height / 2);
+    titleBlock.setPosition(width / 2, height / 2 -400);
+
+
+
+    // room.setSize(width, height);
+
 }
 
 function addIntro() {
@@ -102,32 +116,29 @@ function addIntro() {
         this.scene.run('SceneGame');
     }
     
-    room = this.add.image(300, 450, 'room');
+    room = this.add.image(this.scale.width / 2, this.scale.height / 2, 'room');
+    // room = this.add.image(0, 0, 'room').setOrigin(0, 0);
     room.setTint(0x3B3B3B);
-    boy1 =  this.add.sprite(280, 500, 'boy1').setScale(1.2);
-    girl1 = this.add.sprite(-300, 450, 'girl1');
-    textBlockGirl1 = this.add.sprite(300, 450, 'textBlockGirl1').setScale(0);
-    textBlockBoy1 = this.add.sprite(300, 450, 'textBlockBoy1').setScale(0);
+    // this.scale.on('resize', resize, this);
+
+    // boy1 = this.add.sprite(280, 500, 'boy1').setScale(1.2);
+    boy1 = this.add.sprite(this.scale.width / 2, this.scale.height / 2, 'boy1');
+    
+    girl1 = this.add.sprite(-this.scale.width / 2, this.scale.height / 2, 'girl1');
+    // girl1 = this.add.sprite(-this.scale.width / 2, this.scale.height / 2, 'girl1');
+
+    // textBlockGirl1 = this.add.sprite(300, 450, 'textBlockGirl1').setScale(0);
+    // textBlockBoy1 = this.add.sprite(300, 450, 'textBlockBoy1').setScale(0);
+    textBlockGirl1 = this.add.sprite(this.scale.width / 2, this.scale.height / 2, 'textBlockGirl1').setScale(0);
+    textBlockBoy1 = this.add.sprite(this.scale.width / 2, this.scale.height / 2, 'textBlockBoy1').setScale(0);
     
     const tweenBoy1 = this.tweens.add({
         targets: boy1,
         delay: 1000,
-        duration: 300,
+        duration: 500,
         yoyo: false,
         ease: 'Linear',
-        x: {
-            getEnd: function (target, key, value)
-            {
-                destBoyX -= 30;
-
-                return destBoyX;
-            },
-
-            getStart: function (target, key, value)
-            {
-                return value + 30;
-            }
-        }
+        x:  this.scale.width * 2,
     });
 
     const tweenTextBlockBoy1 = this.tweens.add({
@@ -149,19 +160,20 @@ function addIntro() {
         hold: 1000,
         yoyo: false,
         ease: 'Linear',
-        x: {
-            getEnd: function (target, key, value)
-            {
-                destX -= 30;
+        x: this.scale.width / 2,
+        // x: {
+        //     getEnd: function (target, key, value)
+        //     {
+        //         destX -= 30;
 
-                return destX;
-            },
+        //         return destX;
+        //     },
 
-            getStart: function (target, key, value)
-            {
-                return value + 30;
-            }
-        },
+        //     getStart: function (target, key, value)
+        //     {
+        //         return value + 30;
+        //     }
+        // },
     });
 
     const tweenTextBlockGirl1 = this.tweens.add({
@@ -194,6 +206,8 @@ class SceneGame extends Phaser.Scene {
     preload ()
     {
         this.load.image('room', '../img/room.png');
+        // this.load.spritesheet('room', '../img/room.png', { frameWidth: 507, frameHeight: 160 });
+
         this.load.image('place1-big', '../img/place1-big.png');
         this.load.image('place2-big', '../img/place2-big.png');
         this.load.spritesheet('boy1', '../img/boy1.png', { frameWidth: 600, frameHeight: 900 });
@@ -224,10 +238,24 @@ class SceneGame extends Phaser.Scene {
 
     create ()
     {
-        room = this.add.image(300, 450, 'room');
 
-        // создаем персонаж girl2 
-        girl2 = this.add.sprite(300, 500, 'girl2').setScale(1.2);
+        // const width = this.scale.gameSize.width;
+        // const height = this.scale.gameSize.height;
+
+        // console.log(width)
+        // console.log(this.scale.width)
+
+
+        // room = this.add.image(300, 450, 'room');
+        room1 = this.add.image(this.scale.width / 2, this.scale.height / 2, 'room' );
+        // room1 = this.add.image(0, 0, 'room').setOrigin(0, 0);
+        this.scale.on('resize', resize, this);
+        
+
+        // создаем персонаж girl2
+        // girl2 = this.add.sprite(300, 500, 'girl2').setScale(1.2);
+        girl2 = this.add.sprite(this.scale.width / 2, (this.scale.height / 2)*1.032, 'girl2').setScale(1.2);
+        
         const tweenGirl2 = this.tweens.add({
             targets: girl2,
             //  delay: 1000,
@@ -242,7 +270,7 @@ class SceneGame extends Phaser.Scene {
         });
 
         // выводим заголовок
-        titleBlock = this.add.sprite(300, -31, 'titleBlock');
+        titleBlock = this.add.sprite(this.scale.width / 2, -(this.scale.height / 2), 'titleBlock');
         const tweenTitleBlock = this.tweens.add({
             targets: titleBlock,
             //  delay: 1000,
@@ -250,7 +278,7 @@ class SceneGame extends Phaser.Scene {
             hold: 700,
             yoyo: false,
             ease: 'Linear',
-            y: 31,
+            y: this.scale.height / 2 - 400,
             // onComplete: onCompleteHandler,
             // onCompleteParams: [ textBlockBoy1 ]
         });  
@@ -259,12 +287,12 @@ class SceneGame extends Phaser.Scene {
             if (selectOption === 'place1' || selectOption === 'place2') {
                 if (selectOption === 'place1') {
                     room.setScale(0);
-                    room = this.add.image(300, 450, `${selectOption}-big`).setScale(1.8);
+                    room = this.add.image(this.scale.width / 2, this.scale.height / 2, `${selectOption}-big`).setScale(1.8);
                 }
 
                 if (selectOption === 'place2') {
                     room.setScale(0);
-                    room = this.add.image(300, 450, `${selectOption}-big`).setScale(1.8);
+                    room = this.add.image(this.scale.width / 2, this.scale.height / 2, `${selectOption}-big`).setScale(1.8);
                 }
 
                 this.tweens.add({
@@ -278,7 +306,7 @@ class SceneGame extends Phaser.Scene {
                     scaleY: 1.05,
                 });
 
-                boy1 = this.add.sprite(900, 450, 'boy1').setScale(1);
+                boy1 = this.add.sprite(this.scale.width * 2,  this.scale.height / 2, 'boy1').setScale(1);
                 this.tweens.add({
                     targets: boy1,
                     // delay: 1000,
@@ -286,10 +314,10 @@ class SceneGame extends Phaser.Scene {
                     // hold: 1000,
                     yoyo: false,
                     ease: 'Linear',
-                    x: 400,
+                    x: this.scale.width / 2 + this.scale.width * 0.11,
                 });
 
-                girl2 = this.add.sprite(-300, 500, keyObj).setScale(1);
+                girl2 = this.add.sprite(-this.scale.width / 2, this.scale.height / 2 * 1.032, keyObj).setScale(1);
                 this.tweens.add({
                     targets: girl2,
                     // delay: 1000,
@@ -297,10 +325,12 @@ class SceneGame extends Phaser.Scene {
                     // hold: 1000,
                     yoyo: false,
                     ease: 'Linear',
-                    x: 200,
+                    x: this.scale.width / 2 - this.scale.width * 0.11,
                 });
 
-                textBlockBoyEnd = this.add.sprite(700, 300, 'textBlockBoyEnd').setScale(0);
+                // textBlockBoyEnd = this.add.sprite(700, 300, 'textBlockBoyEnd').setScale(0);
+                textBlockBoyEnd = this.add.sprite(this.scale.width / 2, this.scale.height / 2, 'textBlockBoyEnd').setScale(0);
+
                 this.tweens.add({
                     targets: textBlockBoyEnd,
                     delay: 300,
@@ -310,8 +340,8 @@ class SceneGame extends Phaser.Scene {
                     ease: 'Linear',
                     scaleX: 1,
                     scaleY: 1,
-                    x: 300,
-                    y: 450,
+                    x: this.scale.width / 2,
+                    y: this.scale.height / 2,
                 });
 
                 this.tweens.add({
@@ -323,13 +353,13 @@ class SceneGame extends Phaser.Scene {
                     ease: 'Linear',
                     scaleX: 0,
                     scaleY: 0,
-                    x: 300,
-                    y: 450,
+                    x: this.scale.width / 2,
+                    y: this.scale.height / 2,
                     onComplete: onCompleteHandler,
                     onCompleteParams: [textBlockBoyEnd]
                 });
 
-                playNow = this.add.sprite(300, 950, 'play-now').setInteractive();
+                playNow = this.add.sprite(this.scale.width / 2, this.scale.height * 2, 'play-now').setInteractive();
                 this.tweens.add({
                     targets: playNow,
                     delay: 3500,
@@ -337,7 +367,7 @@ class SceneGame extends Phaser.Scene {
                     // hold: 1000,
                     yoyo: false,
                     ease: 'Linear',
-                    y: 800,
+                    y: this.scale.height / 2 + this.scale.height * 0.4,
                 });
                 
                 playNow.once('pointerup', openExternalLink, this);
@@ -349,7 +379,7 @@ class SceneGame extends Phaser.Scene {
                 b = keyObj;
 
                 girl2.setScale(0);
-                girl2 = this.add.sprite(300, 500, keyObj).setScale(1);
+                girl2 = this.add.sprite(this.scale.width / 2, (this.scale.height / 2)*1.032, keyObj).setScale(1);
             }
         }
         
@@ -407,8 +437,10 @@ class SceneUI extends Phaser.Scene {
         // заполняем группу элементами
         optionsObjects.forEach(({leftOption, rightOption}) => {
             optionsGroup.createMultiple([
-                { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
-                { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
+                // { key: leftOption, setXY: { x: 155, y: 730 }, visible: false, setScale: { x: 0, y: 0 } },
+                // { key: rightOption, setXY: { x: 455, y: 730 }, visible: false, setScale: { x: 0, y: 0 } }
+                { key: leftOption, setXY: { x:  this.scale.width / 2 - 155, y: this.scale.height / 2 + 275 }, visible: false, setScale: { x: 0, y: 0 } },
+                { key: rightOption, setXY: { x: this.scale.width / 2 + 155, y: this.scale.height / 2 + 275 }, visible: false, setScale: { x: 0, y: 0 } }
             ]);
         }); 
 
@@ -447,8 +479,10 @@ class SceneUI extends Phaser.Scene {
                     // yoyo: true,
                     // repeat: 100,
                     ease: 'Linear',
-                    x: 150,
-                    y: 800,
+                    // x: 150,
+                    // y: 800,
+                    x: (this.scale.width / 2)* 0.7 ,
+                    y: this.scale.height / 2 + this.scale.height*0.4,
                 });
             }, 2000);
 
@@ -545,7 +579,7 @@ class SceneUI extends Phaser.Scene {
         }
         
         // курсорпоинтер
-        hand = this.add.sprite(300, 1000, 'hand');
+        hand = this.add.sprite(this.scale.width / 2, this.scale.height * 1.5, 'hand');
         this.tweens.add({
             targets: hand,
             delay: 1000,
@@ -554,22 +588,25 @@ class SceneUI extends Phaser.Scene {
             // yoyo: true,
             // repeat: 100,
             ease: 'Linear',
-            x: 150,
-            y: 800,
+            // x: this.scale.width / 2 + 155,
+            // y: this.scale.height / 2 + 350,
+            x: this.scale.width / 2 + this.scale.width*0.2,
+            y: this.scale.height / 2 + this.scale.height*0.4,
         });
 
         this.tweens.add({
             targets: hand,
             delay: 1700,
-            duration: 1700,
+            duration: 1300,
             // hold: 300,
             yoyo: true,
             repeat: 100,
             ease: 'Linear',
-            x: 450,
+            x: this.scale.height / 2,
         });
     }
 }
+
 
 
 function onCompleteHandler (tween, targets, myImage) {
@@ -577,9 +614,30 @@ function onCompleteHandler (tween, targets, myImage) {
 }
 var config = {
     type: Phaser.AUTO,
-    width: 600,
+    // width: 1092,
+    // height: 912,
+
+    width: 1080,
     height: 900,
-    backgroundColor: '#fff3d5',
+
+    // width: '100vw',
+    // height: '100wh',
+    backgroundColor: '#2b2b2b',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        parent: 'phaser-example',
+        // parent: 'canvas',
+
+        // width: '100%',
+        // height: '100%'
+
+        // width: 1092,
+        // height: 912,
+    },
+    // dom: {
+    //     createContainer: true
+    // },
     scene: [SceneIntro, SceneGame, SceneUI],
 };
 

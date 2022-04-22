@@ -89,6 +89,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
+    "phaser": "^3.55.2",
     "phaser-plugin-game-scale": "^1.3.5"
   }
 }
