@@ -51,6 +51,20 @@ const optionsObjects = [
 
 ]
 
+// var config = {
+//     type: Phaser.AUTO,
+//     width: 600,
+//     height: 900,
+//     backgroundColor: '#fff3d5',
+//     scene: [SceneIntro, SceneGame, SceneUI],
+// };
+
+
+
+// var game = new Phaser.Game(config);
+
+// console.log(game.scale)
+
 // создаем сцену интро
 class SceneIntro extends Phaser.Scene {
 
@@ -61,6 +75,11 @@ class SceneIntro extends Phaser.Scene {
 
     preload ()
     {
+        // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    // game.scale.pageAlignHorizontally = true;
+    // game.scale.pageAlignVertically = true;
+    //     game.stage.backgroundColor = '#eee';
+        
         this.load.image('room', '../img/room.png');
         this.load.image('clickHereButton', '../img/clickHereButton.png');
         this.load.spritesheet('girl1', '../img/girl1.png', { frameWidth: 600, frameHeight: 900 });
@@ -556,30 +575,19 @@ class SceneUI extends Phaser.Scene {
 function onCompleteHandler (tween, targets, myImage) {
     myImage.setScale(0);
 }
-
 var config = {
     type: Phaser.AUTO,
     width: 600,
     height: 900,
     backgroundColor: '#fff3d5',
-    scale: {
-        // mode: Phaser.Scale.RESIZE,
-        // parent: 'phaser-example',
-        // width: 600,
-        // height: 900,
-        // min: {
-        //     width: 320,
-        //     height: 480
-        // },
-        // max: {
-        //     width: 1400,
-        //     height: 1200
-        // }
-    },
     scene: [SceneIntro, SceneGame, SceneUI],
 };
 
+
+
 var game = new Phaser.Game(config);
+
+console.log(game)
 
 //////////////////////
 //  function restart() {
