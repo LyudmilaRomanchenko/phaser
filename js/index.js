@@ -7,8 +7,10 @@ let textBlockBoy1;
 let textBlockGirl1;
 let textBlockBoyEnd;
 let boy1;
+let boy2;
 let girl1;
 let girl2;
+let girl3;
 let titleBlock;
 let room;
 let room1;
@@ -91,24 +93,47 @@ function resize (gameSize, baseSize, displaySize, resolution)
 
     // this.bg.setSize(width, height);
     clickHereButton.setPosition(width / 2, height / 2);
-    room.setSize(width, height);
-    room.setPosition(width / 2, height / 2);
-    room1.setSize(width, height);
-    room1.setPosition(width / 2, height / 2);
-    boy1.setPosition(width / 2, height * 2);
-    girl1.setPosition(width / 2, height / 2);
-    girl2.setPosition(width / 2, (this.scale.height / 2)*1.032);
-    // girl2.setPosition(width / 2, this.scale.height / 2);
+    if (room) {
+         room.setSize(width, height);
+        room.setPosition(width / 2, height / 2);
+    }
 
-    textBlockGirl1.setPosition(width / 2, height / 2);
-    textBlockBoy1.setPosition(width / 2, height / 2);
-    titleBlock.setPosition(width / 2, height / 2 -400);
+    if (room1) {
+        room1.setSize(width, height);
+        room1.setPosition(width / 2, height / 2);
+        boy1.setPosition(width / 2, height * 2);
+        girl1.setPosition(width / 2, height / 2);
+        girl2.setPosition(width / 2, (height / 2)*1.032);
+        // girl2.setPosition(width / 2, this.scale.height / 2);
 
+        textBlockGirl1.setPosition(width / 2, height / 2);
+        textBlockBoy1.setPosition(width / 2, height / 2);
+        titleBlock.setPosition(width / 2, height / 2 - 400);
+    }
+   
+    if (boy2) {
+        boy2.setPosition(width / 2 + width * 0.11, height / 2);
+    }
 
+    if (girl3) {
+        girl3.setPosition(width / 2  - width * 0.13, (height / 2)*1.032);
+    }
 
     // room.setSize(width, height);
-
 }
+
+// function resize1 (gameSize, baseSize, displaySize, resolution)
+// {
+//     var width = gameSize.width;
+//     var height = gameSize.height;
+
+//     this.cameras.resize(width, height);
+
+   
+//     boy2.setPosition(width / 2, height * 2);
+    
+//     // room.setSize(width, height);
+// }
 
 function addIntro() {
         
@@ -249,7 +274,7 @@ class SceneGame extends Phaser.Scene {
         // room = this.add.image(300, 450, 'room');
         room1 = this.add.image(this.scale.width / 2, this.scale.height / 2, 'room' );
         // room1 = this.add.image(0, 0, 'room').setOrigin(0, 0);
-        this.scale.on('resize', resize, this);
+        // this.scale.on('resize', resize, this);
         
 
         // создаем персонаж girl2
@@ -306,9 +331,9 @@ class SceneGame extends Phaser.Scene {
                     scaleY: 1.05,
                 });
 
-                boy1 = this.add.sprite(this.scale.width * 2,  this.scale.height / 2, 'boy1').setScale(1);
+                boy2 = this.add.sprite(this.scale.width * 2,  this.scale.height / 2, 'boy1').setScale(1);
                 this.tweens.add({
-                    targets: boy1,
+                    targets: boy2,
                     // delay: 1000,
                     duration: 500,
                     // hold: 1000,
@@ -317,15 +342,16 @@ class SceneGame extends Phaser.Scene {
                     x: this.scale.width / 2 + this.scale.width * 0.11,
                 });
 
-                girl2 = this.add.sprite(-this.scale.width / 2, this.scale.height / 2 * 1.032, keyObj).setScale(1);
+
+                girl3 = this.add.sprite(-this.scale.width / 2, this.scale.height / 2 * 1.032, keyObj).setScale(1);
                 this.tweens.add({
-                    targets: girl2,
+                    targets: girl3,
                     // delay: 1000,
                     duration: 500,
                     // hold: 1000,
                     yoyo: false,
                     ease: 'Linear',
-                    x: this.scale.width / 2 - this.scale.width * 0.11,
+                    x: this.scale.width / 2 - this.scale.width * 0.13,
                 });
 
                 // textBlockBoyEnd = this.add.sprite(700, 300, 'textBlockBoyEnd').setScale(0);
@@ -335,7 +361,7 @@ class SceneGame extends Phaser.Scene {
                     targets: textBlockBoyEnd,
                     delay: 300,
                     duration: 500,
-                    hold: 2500,
+                    hold: 1500,
                     yoyo: false,
                     ease: 'Linear',
                     scaleX: 1,
@@ -346,7 +372,7 @@ class SceneGame extends Phaser.Scene {
 
                 this.tweens.add({
                     targets: textBlockBoyEnd,
-                    delay: 2800,
+                    delay: 2000,
                     duration: 500,
                     // hold: 2500,
                     yoyo: false,
@@ -362,7 +388,7 @@ class SceneGame extends Phaser.Scene {
                 playNow = this.add.sprite(this.scale.width / 2, this.scale.height * 2, 'play-now').setInteractive();
                 this.tweens.add({
                     targets: playNow,
-                    delay: 3500,
+                    delay: 1800,
                     duration: 500,
                     // hold: 1000,
                     yoyo: false,
@@ -386,6 +412,8 @@ class SceneGame extends Phaser.Scene {
         eventsCenter.on('update-selectOption', updateSelectOption, this);
 
         this.scene.launch('SceneUI');
+        this.scale.on('resize', resize, this);
+
 
         function openExternalLink ()
         {
@@ -614,11 +642,11 @@ function onCompleteHandler (tween, targets, myImage) {
 }
 var config = {
     type: Phaser.AUTO,
-    // width: 1092,
-    // height: 912,
-
-    width: 1080,
+    width: 600,
     height: 900,
+
+    // width: 1080,
+    // height: 900,
 
     // width: '100vw',
     // height: '100wh',
