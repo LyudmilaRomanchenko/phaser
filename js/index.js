@@ -109,6 +109,7 @@ function resize (gameSize, baseSize, displaySize, resolution)
         textBlockGirl1.setPosition(width / 2, height / 2);
         textBlockBoy1.setPosition(width / 2, height / 2);
         titleBlock.setPosition(width / 2, height / 2 - 400);
+        hand.setPosition(width / 2 - width * 0.2);
     }
    
     if (boy2) {
@@ -618,7 +619,7 @@ class SceneUI extends Phaser.Scene {
             ease: 'Linear',
             // x: this.scale.width / 2 + 155,
             // y: this.scale.height / 2 + 350,
-            x: this.scale.width / 2 + this.scale.width*0.2,
+            x: this.scale.width / 2 - this.scale.width*0.2,
             y: this.scale.height / 2 + this.scale.height*0.4,
         });
 
